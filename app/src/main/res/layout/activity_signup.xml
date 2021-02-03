@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signupLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundgradient"
+    tools:context=".Signup">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-82dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <Button
+            android:id="@+id/signupConfirmBtn"
+            android:layout_width="265dp"
+            android:layout_height="66dp"
+            android:layout_marginBottom="72dp"
+            android:text="Sign-up"
+            app:backgroundTint="#2BAFF7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/signupEmail"
+            android:layout_width="375dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="28dp"
+            android:background="#FFFFFF"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/signupPass2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/signupPass2"
+            android:layout_width="375dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="20dp"
+            android:background="#FFFFFF"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/signupPass1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/signupPass1"
+            android:layout_width="375dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="28dp"
+            android:background="#FFFFFF"
+            android:ems="10"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:padding="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/signupConfirmBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName3"
+            android:layout_width="93dp"
+            android:layout_height="41dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="WELCOME"
+            app:layout_constraintBottom_toTopOf="@+id/signupName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.526" />
+
+        <EditText
+            android:id="@+id/signupName"
+            android:layout_width="375dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="24dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:ems="10"
+            android:hint="Username"
+            android:includeFontPadding="false"
+            android:inputType="textPersonName"
+            android:padding="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/signupEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
