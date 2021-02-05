@@ -1,15 +1,20 @@
 package com.paisleydavis.transcribe
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Switch
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
@@ -47,10 +52,14 @@ class Profile : AppCompatActivity() {
         //hide mood edit layout
         moodLayout.visibility = View.GONE
 
+        //hide weight edit layout
+        editWeightLayout.visibility = View.GONE
+
         @SuppressLint("UseSwitchCompatOrMaterialCode")
         val medReminderSwitch = findViewById<Switch>(R.id.med1Switch)
 
         //delete medication
+        //TODO: implement user confirmation for deleting medication
         med1Delete.setOnClickListener {
             med1Container.visibility = View.GONE
 
@@ -86,6 +95,7 @@ class Profile : AppCompatActivity() {
         //edit mood
         addMoodBtn.setOnClickListener {
             if(moodLayout.visibility == View.GONE){
+                editWeightLayout.visibility = View.GONE
                 moodLayout.visibility = View.VISIBLE
             }
             else{
@@ -94,22 +104,69 @@ class Profile : AppCompatActivity() {
         }
 
         //test notification for reminder switch
+        //TODO: set-up test notification when turning on reminder switch
         medReminderSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 //change med color
+                med1Container.setBackgroundColor(Color.GREEN)
                 
             } else {
-                //do nothing
+                //change color back
+                med1Container.setBackgroundColor(Color.TRANSPARENT)
             }
         }
-    }
+
+        //show edit weight layout
+        addWeightBtn.setOnClickListener(){
+            if(editWeightLayout.visibility == View.VISIBLE){
+                editWeightLayout.visibility = View.GONE
+            }
+            else{
+                editWeightLayout.visibility = View.VISIBLE
+                moodLayout.visibility = View.GONE
+            }
+        }
+
+        //edit weight
+        val currWeight = weight.text
+        weightInput.setText(currWeight)
+
+        weightUp.setOnClickListener(){
+            var weightNum = weightInput.text.toString().toInt()
+            weightNum += 1
+            weightInput.setText(weightNum.toString())
+        }
+        weightDown.setOnClickListener(){
+            var weightNum = weightInput.text.toString().toInt()
+            weightNum -= 1
+            weightInput.setText(weightNum.toString())
+        }
+        editWeightSubmit.setOnClickListener(){
+            val newWeight = weightInput.text
+            weight.text = newWeight
+            editWeightLayout.visibility = View.GONE
+        }
+
+    } ////////
 
     //sets saved mood
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP) //requirement for getDrawable()
     fun setMood(view: View) {
+        val errMessage = "This doesn't work yet >:("
+        Snackbar.make(
+                findViewById(R.id.secondaryContainer),
+                errMessage,
+                Snackbar.LENGTH_SHORT
+        ).show()
+        moodLayout.visibility = View.GONE
+//            val btnId = view.resources
+//        Log.d("ID", btnId.toString())
+            savedMood.setImageDrawable(getDrawable(R.drawable.meh)) //TODO: this doesn't change the mood to the selected one atm
 //        val drawble = resources.getDrawable(R.drawable.ic_training,theme)
 
 //        val chosenMood = resources.getDrawable(R.drawable.tired, theme)
 //                savedMood.setImageDrawable()
     }
+
 }
 
