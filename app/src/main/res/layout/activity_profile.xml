@@ -6,18 +6,158 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundgradient"
+    android:fadingEdge="none"
     tools:context=".Profile">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/secondaryContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/medContainer"
+            android:layout_width="403dp"
+            android:layout_height="114dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/box_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greetingContainer">
+
+            <TextView
+                android:id="@+id/medLabel"
+                android:layout_width="146dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="4dp"
+                android:text="Medications: "
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.062"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/med1Container"
+                android:layout_width="391dp"
+                android:layout_height="59dp"
+                android:layout_marginBottom="16dp"
+                android:background="#00FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/medLabel"
+                tools:showIn="@layout/activity_profile">
+
+                <ImageButton
+                    android:id="@+id/med1Delete"
+                    android:layout_width="47dp"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:tint="#002196F3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/med1Dose"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
+
+                <ImageView
+                    android:id="@+id/med1Add"
+                    android:layout_width="49dp"
+                    android:layout_height="46dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/med1Delete"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_menu_add" />
+
+                <Switch
+                    android:id="@+id/med1Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reminder"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/med1Add"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <TextView
+                    android:id="@+id/med1Name"
+                    android:layout_width="107dp"
+                    android:layout_height="27dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:text="Lexapro"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.516" />
+
+                <TextView
+                    android:id="@+id/med1Dose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:text="40mg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/med1Name"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.512" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btnContainer"
+            android:layout_width="373dp"
+            android:layout_height="69dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/infoContainer">
+
+            <Button
+                android:id="@+id/addWeightBtn"
+                android:layout_width="164dp"
+                android:layout_height="46dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:text="Track Weight"
+                app:backgroundTint="#2BAFF7"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.491" />
+
+            <Button
+                android:id="@+id/addMoodBtn"
+                android:layout_width="164dp"
+                android:layout_height="46dp"
+                android:text="Track Mood "
+                app:backgroundTint="#2BAFF7"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.627"
+                app:layout_constraintStart_toEndOf="@+id/addWeightBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.491" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/greetingContainer"
             android:layout_width="403dp"
             android:layout_height="128dp"
+            android:layout_marginTop="16dp"
             android:background="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,8 +191,8 @@
 
             <TextView
                 android:id="@+id/profileDate"
-                android:layout_width="248dp"
-                android:layout_height="36dp"
+                android:layout_width="244dp"
+                android:layout_height="21dp"
                 android:layout_marginEnd="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginTop="20dp"
@@ -60,121 +200,24 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.203"
+                app:layout_constraintHorizontal_bias="0.083"
                 app:layout_constraintStart_toEndOf="@+id/todayIs"
-                app:layout_constraintTop_toBottomOf="@+id/username" />
+                app:layout_constraintTop_toBottomOf="@+id/username"
+                app:layout_constraintVertical_bias="0.173" />
 
             <TextView
                 android:id="@+id/todayIs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:text="Today is"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/greeting"
-                app:layout_constraintVertical_bias="0.214" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/medContainer"
-            android:layout_width="403dp"
-            android:layout_height="114dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/box_border"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/greetingContainer">
-
-            <TextView
-                android:id="@+id/medLabel"
-                android:layout_width="146dp"
-                android:layout_height="37dp"
-                android:layout_marginTop="4dp"
-                android:text="Medications: "
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.062"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/med1Container"
-                android:layout_width="391dp"
-                android:layout_height="59dp"
-                android:layout_marginBottom="16dp"
-                android:background="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.444"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medLabel"
-                tools:showIn="@layout/activity_profile">
-
-                <TextView
-                    android:id="@+id/med1Name"
-                    android:layout_width="107dp"
-                    android:layout_height="27dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:text="Lexapro"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.516" />
-
-                <ImageButton
-                    android:id="@+id/med1Delete"
-                    android:layout_width="47dp"
-                    android:layout_height="44dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:background="@android:color/transparent"
-                    android:tint="#002196F3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/med1Dose"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@android:drawable/ic_menu_delete" />
-
-                <TextView
-                    android:id="@+id/med1Dose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginLeft="12dp"
-                    android:text="40mg"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/med1Name"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.512" />
-
-                <ImageView
-                    android:id="@+id/med1add"
-                    android:layout_width="49dp"
-                    android:layout_height="46dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/med1Delete"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@android:drawable/ic_menu_add" />
-
-                <Switch
-                    android:id="@+id/med1Switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reminder"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/med1add"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintVertical_bias="0.125" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -184,11 +227,12 @@
             android:layout_height="114dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/box_border"
-            app:layout_constraintTop_toBottomOf="@+id/medContainer"
-            tools:layout_editor_absoluteX="4dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editLayout">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/savedMood"
                 android:layout_width="50dp"
                 android:layout_height="44dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -240,55 +284,171 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnContainer"
-            android:layout_width="395dp"
-            android:layout_height="107dp"
-            android:layout_marginTop="7dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/editLayout"
+            android:layout_width="397dp"
+            android:layout_height="88dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/infoContainer"
-            app:layout_constraintVertical_bias="0.083">
+            app:layout_constraintTop_toBottomOf="@+id/medContainer">
 
             <Button
-                android:id="@+id/addWeightBtn"
-                android:layout_width="164dp"
-                android:layout_height="46dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginStart="24dp"
-                android:text="Track Weight"
-                app:backgroundTint="#2BAFF7"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.491" />
-
-            <Button
-                android:id="@+id/addMoodBtn"
-                android:layout_width="164dp"
-                android:layout_height="46dp"
-                android:text="Track Mood "
+                android:id="@+id/editSubmit"
+                android:layout_width="97dp"
+                android:layout_height="64dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:text="Edit"
                 app:backgroundTint="#2BAFF7"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.627"
-                app:layout_constraintStart_toEndOf="@+id/addWeightBtn"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.491" />
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <EditText
+                android:id="@+id/editDosage"
+                android:layout_width="127dp"
+                android:layout_height="41dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editSubmit"
+                app:layout_constraintHorizontal_bias="0.014"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/editMedName"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/editMedName"
+                android:layout_width="125dp"
+                android:layout_height="41dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/editSubmit"
+                app:layout_constraintHorizontal_bias="0.026"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="60dp"
+                android:background="#00FFFFFF"
+                android:fadingEdge="none"
+                android:tint="#E817D7"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@android:drawable/arrow_down_float" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dosage:"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Name:"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="more stuff here...."
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/moodLayout"
+            android:layout_width="407dp"
+            android:layout_height="65dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.063"
+            app:layout_constraintHorizontal_bias="0.428"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnContainer"
-            app:layout_constraintVertical_bias="0.116" />
+            app:layout_constraintVertical_bias="0.19">
+
+            <LinearLayout
+                android:id="@+id/moodLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp">
+
+                <ImageView
+                    android:id="@+id/angry"
+                    android:layout_width="62dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:onClick="setMood"
+                    app:srcCompat="@drawable/confused" />
+
+                <ImageView
+                    android:id="@+id/crying"
+                    android:layout_width="59dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:onClick="setMood"
+                    app:srcCompat="@drawable/crying" />
+
+                <ImageView
+                    android:id="@+id/sad"
+                    android:layout_width="64dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:onClick="setMood"
+                    app:srcCompat="@drawable/meh" />
+
+                <ImageView
+                    android:id="@+id/neutral"
+                    android:layout_width="61dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:onClick="setMood"
+                    app:srcCompat="@drawable/neutral" />
+
+                <ImageView
+                    android:id="@+id/tired"
+                    android:layout_width="55dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:onClick="setMood"
+                    app:srcCompat="@drawable/tired" />
+
+                <ImageView
+                    android:id="@+id/happy"
+                    android:layout_width="56dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:onClick="setMood"
+                    app:srcCompat="@drawable/happy" />
+
+                <ImageView
+                    android:id="@+id/smiling"
+                    android:layout_width="53dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:onClick="setMood"
+                    app:srcCompat="@drawable/smile" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
