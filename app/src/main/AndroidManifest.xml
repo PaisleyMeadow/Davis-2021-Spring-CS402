@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Transcribe">
-        <activity android:name=".Signup"></activity>
+        <activity
+            android:name=".AddMedActivity"
+            android:label="@string/title_activity_add_med"
+            android:theme="@style/Theme.Transcribe.NoActionBar"></activity>
+        <activity android:name=".Signup" />
         <activity android:name=".Profile" />
         <activity android:name=".MainActivity">
             <intent-filter>

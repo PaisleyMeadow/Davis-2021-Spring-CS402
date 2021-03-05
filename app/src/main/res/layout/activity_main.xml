@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundgradient"
+    android:background="@drawable/main_purple_border"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,10 +17,11 @@
             android:id="@+id/loginBtn"
             android:layout_width="340dp"
             android:layout_height="77dp"
-            android:layout_marginTop="32dp"
-            android:text="Login"
+            android:layout_marginTop="16dp"
+            android:text="@string/login"
             android:textSize="24sp"
-            app:backgroundTint="#2BAFF7"
+            app:backgroundTint="@color/light_green"
+            android:textColor="@color/almost_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,9 +32,10 @@
             android:layout_width="340dp"
             android:layout_height="77dp"
             android:layout_marginTop="12dp"
-            android:text="Sign-up"
+            android:text="@string/signup"
             android:textSize="24sp"
-            app:backgroundTint="#2BAFF7"
+            app:backgroundTint="@color/light_green"
+            android:textColor="@color/almost_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,12 +43,14 @@
 
         <ImageView
             android:id="@+id/landingImg"
-            android:layout_width="252dp"
-            android:layout_height="313dp"
+            android:layout_width="319dp"
+            android:layout_height="364dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.826"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/welcome" />
+            app:srcCompat="@drawable/logo_rough" />
 
         <ImageView
             android:id="@+id/helpBtn"
@@ -64,10 +68,11 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="This is filler text and that is a filler image."
+            android:layout_marginTop="4dp"
+            android:text="Login or sign up to get started."
+            android:textColor="@color/almost_black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/landingImg" />
 

@@ -33,10 +33,9 @@ class MainActivity : AppCompatActivity() {
 
         val helpBtn = findViewById<ImageView>(R.id.helpBtn)
         helpBtn.setOnClickListener(){
-            //go to webpage
-            //this is a filler link lol
-            //idk if I'll have it go to another page w/ info or my website. might have about button for website
-            val url = "https://hooooooooo.com/"
+            //go to webpage, at some point will be Transcribe's own website
+            //for now, go to my personal site -- I'll make a page for it off of my domain eventually
+            val url = "https://www.paisleymdavis.com"
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
     }

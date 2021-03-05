@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="login_button" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="colorButtonNormal">@color/main_purple</item>
+        <item name="colorControlHighlight">@color/light_purple</item>
+    </style>
+
+</resources>
