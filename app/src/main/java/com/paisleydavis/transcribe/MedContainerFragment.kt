@@ -1,5 +1,6 @@
 package com.paisleydavis.transcribe
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,12 +9,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_med.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM1 = "medName"
+private const val ARG_PARAM2 = "medDosage"
 
 /**
  * A simple [Fragment] subclass.
@@ -24,9 +29,10 @@ class MedContainerFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var viewOfLayout: View
 
-    private val medFragment = MedFragment.newInstance("Lexapro", "10mg")
-    private val medFragment2 = MedFragment.newInstance("Somethingoxyn", "100mg")
+//    private val medFragment = MedFragment.newInstance("Lexapro", "10mg")
+//    private val medFragment2 = MedFragment.newInstance("Somethingoxyn", "100mg")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,31 +40,43 @@ class MedContainerFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        //register eventbus for observing adding new medications
+        EventBus.getDefault().register(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_med_container, container, false)
+        val viewOfLayout = inflater.inflate(R.layout.fragment_med_container, container, false)
 
-        //place some filler meds into container (someday will get info from database, but ya know).
+        //place some filler med fragments into container (someday will get info from database, but ya know).
         if(savedInstanceState == null) {
             createNewMedFragment("Lexapro", "20mg")
             createNewMedFragment("Androidatilisol", "5mg")
         }
 
-        val addButton = view.findViewById<Button>(R.id.addMedButton)
-        addButton.setOnClickListener(showAddMed())
+        val addButton = viewOfLayout.findViewById<ImageView>(R.id.addMedButton)
+        addButton.setOnClickListener{goToAddMed()}
 
         // Inflate the layout for this fragment
-        return view
+        return viewOfLayout
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event:NewMedEvent){
+        //create new med fragment
+        createNewMedFragment(event.medName, event.medDosage)
     }
 
     /**
-     * Show add med options
+     * Go to add med activity, from profile by tapping medications + button
      */
-    private fun showAddMed(): View.OnClickListener? {
+    private fun goToAddMed(){
 
+        val intent = Intent(activity, AddMedActivity::class.java)
+
+        startActivity(intent)
     }
 
     /**
@@ -68,9 +86,13 @@ class MedContainerFragment : Fragment() {
         val newMedFragment = MedFragment.newInstance(name, dosage)
 
         //will have to worry about state here eventually (probably anyways)
-        fragmentManager?.beginTransaction()
-            ?.add(R.id.medContainerFrame, newMedFragment)
-            ?.commit()
+        //TODO: ask Michael about fragmentManager deprecation
+        parentFragmentManager.beginTransaction()
+            .add(R.id.medContainerFrame, newMedFragment)
+            .commitAllowingStateLoss();
+            //TODO: ask Michael about the fragment/state loss issue^ (replicate by changing
+            //to just ".commit()"
+            //is commitAllowingStateLoss() bad? Maybe. Did it fix my problem? Yes.
 
     }
 

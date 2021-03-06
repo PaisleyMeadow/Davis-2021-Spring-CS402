@@ -1,14 +1,27 @@
 package com.paisleydavis.transcribe
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
@@ -53,120 +66,104 @@ class Profile : AppCompatActivity() {
                 .commit()
         }
 
-        /////
+        //when photo is tapped, display an instructional message on how to change it
+        val profileImage = findViewById<ImageView>(R.id.profileImage)
+        val profileImageText = findViewById<TextView>(R.id.profileImageText)
+        profileImage.setOnClickListener{
 
-//        //hide med edit layout
-//        editLayout.visibility = View.GONE
-//
-//        //hide mood edit layout
-//        moodLayout.visibility = View.GONE
-//
-//        //hide weight edit layout
-//        editWeightLayout.visibility = View.GONE
+            if(profileImageText.visibility == View.GONE){
+                profileImageText.visibility = View.VISIBLE
+                profileImage.alpha = 0.4f
 
-//        @SuppressLint("UseSwitchCompatOrMaterialCode")
-//        val medReminderSwitch = findViewById<Switch>(R.id.med1Switch)
-//
-//        //delete medication
-//        //TODO: implement user confirmation for deleting medication
-//        med1Delete.setOnClickListener {
-//            med1Container.visibility = View.GONE
-//
-//            editLayout.visibility = View.GONE
-//        }
-//
-//        //edit medication
-//        med1Add.setOnClickListener {
-//            //fill name and dosage
-//            val name = med1Name.text.toString()
-//            editMedName.setText(name)
-//
-//            val dose = med1Dose.text.toString()
-//            editDosage.setText(dose)
-//
-//            if (editLayout.visibility == View.VISIBLE) {
-//                editLayout.visibility = View.GONE
-//            } else {
-//                editLayout.visibility = View.VISIBLE
-//            }
-//        }
+                //wait 1 second before photo goes make to normal
+                Handler().postDelayed({
+                    profileImageText.visibility = View.GONE
+                    profileImage.alpha = 1f
+                }, 1000)
+            }
+        }
 
-//        editSubmit.setOnClickListener {
-//            editLayout.visibility = View.GONE
-//
-//            val newName = editMedName.text.toString()
-//            val newDose = editDosage.text.toString()
-//
-//            med1Name.text = newName
-//            med1Dose.text = newDose
-//        }
-//
-//        //edit mood
-//        addMoodBtn.setOnClickListener {
-//            if(moodLayout.visibility == View.GONE){
-//                editWeightLayout.visibility = View.GONE
-//                moodLayout.visibility = View.VISIBLE
-//            }
-//            else{
-//                moodLayout.visibility = View.GONE
-//            }
-//        }
-//
-//        //test notification for reminder switch
-//        //TODO: set-up test notification when turning on reminder switch
-//        medReminderSwitch.setOnCheckedChangeListener { _, isChecked ->
-//            if (isChecked) {
-//                //change med color
-//                med1Container.setBackgroundColor(Color.GREEN)
-//
-//            } else {
-//                //change color back
-//                med1Container.setBackgroundColor(Color.TRANSPARENT)
-//            }
-//        }
+        //When profile photo is tapped and held, take new profile photo and replaces current one
+        //TODO: add better default photo
+        //gonna be honest, this is mostly Ziray's code, but like, how else would I do it?
+//        val cameraButton = findViewById<Button>(R.id.editImageButton)
+        profileImage.setOnLongClickListener{
+            val cameraCheckPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
 
-//        //show edit weight layout
-//        addWeightBtn.setOnClickListener(){
-//            if(editWeightLayout.visibility == View.VISIBLE){
-//                editWeightLayout.visibility = View.GONE
-//            }
-//            else{
-//                editWeightLayout.visibility = View.VISIBLE
-//                moodLayout.visibility = View.GONE
-//            }
-//        }
+            if (cameraCheckPermission != PackageManager.PERMISSION_GRANTED){
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
+                    val builder = AlertDialog.Builder(this)
 
-        //edit weight
-//        val currWeight = weight.text
-//        weightInput.setText(currWeight)
-//
-//        weightUp.setOnClickListener(){
-//            var weightNum = weightInput.text.toString().toInt()
-//            weightNum += 1
-//            weightInput.setText(weightNum.toString())
-//        }
-//        weightDown.setOnClickListener(){
-//            var weightNum = weightInput.text.toString().toInt()
-//            weightNum -= 1
-//            weightInput.setText(weightNum.toString())
-//        }
-//        editWeightSubmit.setOnClickListener(){
-//            val newWeight = weightInput.text
-//            weight.text = newWeight
-//            editWeightLayout.visibility = View.GONE
-//        }
+                    val message = getString(R.string.permission_message)
+                    builder.setTitle(R.string.permission_title)
+                            .setMessage(message)
+                            .setPositiveButton("OK") { _, _ ->
+                                requestPermission()
+                            }
 
-    } ////////
+                    val dialog = builder.create()
+                    dialog.show()
+                }
+                else{
+                    Log.d("CAMERA", "No rationale.")
+                    requestPermission() // Will not display the request
+                }
+            }
+            else{
+                launchCamera()
+            }
+            //setOnLongClickListener needs to return a boolean to notify if "you have actually consumed the event"
+            true
+        }
+
+        }
+
+    private fun launchCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, 9090)
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 123)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        for ((index, permission) in permissions.withIndex()){
+            if( permission == Manifest.permission.CAMERA){
+                if( grantResults[index] == PackageManager.PERMISSION_GRANTED){
+                    launchCamera()
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if( requestCode == 9090){
+
+            if( data != null ) {
+                val imageData: Bitmap = data.extras!!.get("data") as Bitmap
+
+                val imageView = findViewById<ImageView>(R.id.profileImage)
+                imageView.setImageBitmap(imageData)
+            }
+        }
+    }
+
+} ////////
 
     //sets saved mood
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP) //requirement for getDrawable()
-    fun setMood(view: View) {
-        val errMessage = "This doesn't work yet >:("
-        Snackbar.make(
-                findViewById(R.id.secondaryContainer),
-                errMessage,
-                Snackbar.LENGTH_SHORT
-        ).show()
+//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP) //requirement for getDrawable()
+//    fun setMood(view: View) {
+//        val errMessage = "This doesn't work yet >:("
+//        Snackbar.make(
+//                findViewById(R.id.secondaryContainer),
+//                errMessage,
+//                Snackbar.LENGTH_SHORT
+//        ).show()
 //        moodLayout.visibility = View.GONE
 //            val btnId = view.resources
 //        Log.d("ID", btnId.toString())
@@ -175,7 +172,7 @@ class Profile : AppCompatActivity() {
 
 //        val chosenMood = resources.getDrawable(R.drawable.tired, theme)
 //                savedMood.setImageDrawable()
-    }
-
-}
+//    }
+//
+//}
 

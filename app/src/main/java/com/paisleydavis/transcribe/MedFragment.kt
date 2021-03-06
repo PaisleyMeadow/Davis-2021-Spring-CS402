@@ -38,8 +38,6 @@ class MedFragment : Fragment() {
 
         viewOfLayout = inflater.inflate(R.layout.fragment_med, container, false)
 
-        val medNameText = viewOfLayout.findViewById<TextView>(R.id.medNameTextView)
-
         changeMedName(param1)
         changeMedDosage(param2)
 
