@@ -6,9 +6,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * @see: https://mailboxlayer.com/
+ * @link: https://mailboxlayer.com/
  */
-class EmailValidationService(userEmail: String) {
+class EmailValidationService() {
     private val service: EmailValidationAPI
 
     init{
@@ -23,8 +23,8 @@ class EmailValidationService(userEmail: String) {
         service = retrofit.create(EmailValidationAPI::class.java)
     }
 
-    fun getValidationResponse(callback: Callback<EmailValidationResponse>){
-        val call = service.getValidationResponse()
+    fun getValidationResponse(userEmail: String, callback: Callback<EmailValidationResponse>){
+        val call = service.getValidationResponse(userEmail)
         call.enqueue(callback)
     }
 }

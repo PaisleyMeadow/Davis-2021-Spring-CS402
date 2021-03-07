@@ -5,6 +5,7 @@
     android:id="@+id/bottom_navigation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:itemIconTint="@color/almost_black"
     app:backgroundTint="@color/light_green"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"

@@ -28,7 +28,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
-
+//TODO: Optimize activity order -- make Profile top stack when called
 class Profile : AppCompatActivity() {
 
     //get medication container fragment
@@ -91,7 +91,6 @@ class Profile : AppCompatActivity() {
         }
 
         //When profile photo is tapped and held, take new profile photo and replaces current one
-        //TODO: add better default photo
         //gonna be honest, this is mostly Ziray's code, but like, how else would I do it?
         profileImage.setOnLongClickListener{
             val cameraCheckPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)

@@ -13,12 +13,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //TODO: create login activity (even if it doesn't do anything at the moment)
         val loginBtn = findViewById<Button>(R.id.loginBtn)
         loginBtn.setOnClickListener(){
             //change to profile activity
             val intent = Intent(this, Profile::class.java)
             intent.putExtra("logintmp", "testing main to signup")
-
             startActivity(intent)
         }
 
