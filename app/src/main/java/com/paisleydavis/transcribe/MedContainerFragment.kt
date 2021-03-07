@@ -48,7 +48,7 @@ class MedContainerFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val viewOfLayout = inflater.inflate(R.layout.fragment_med_container, container, false)
+        viewOfLayout = inflater.inflate(R.layout.fragment_med_container, container, false)
 
         //place some filler med fragments into container (someday will get info from database, but ya know).
         if(savedInstanceState == null) {
@@ -73,9 +73,7 @@ class MedContainerFragment : Fragment() {
      * Go to add med activity, from profile by tapping medications + button
      */
     private fun goToAddMed(){
-
         val intent = Intent(activity, AddMedActivity::class.java)
-
         startActivity(intent)
     }
 

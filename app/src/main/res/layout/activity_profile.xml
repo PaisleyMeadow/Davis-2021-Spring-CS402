@@ -10,6 +10,7 @@
     tools:context=".Profile">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,8 +36,8 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="16dp"
                     android:text="TmpUser"
                     android:textSize="36sp"
@@ -49,8 +50,8 @@
                     android:id="@+id/greeting"
                     android:layout_width="65dp"
                     android:layout_height="49dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Hi, "
                     android:textSize="36sp"
@@ -61,9 +62,9 @@
                     android:id="@+id/profileDate"
                     android:layout_width="244dp"
                     android:layout_height="21dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginRight="4dp"
-                    android:layout_marginTop="20dp"
                     android:text="TmpDate"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -77,8 +78,8 @@
                     android:id="@+id/todayIs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="20dp"
                     android:text="Today is"
                     android:textSize="14sp"
@@ -125,5 +126,13 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/profile_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

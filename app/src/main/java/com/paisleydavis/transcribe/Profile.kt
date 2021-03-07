@@ -18,10 +18,12 @@ import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
@@ -36,6 +38,12 @@ class Profile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        //initialize bottom bar fragment
+        val bottomBar = BottomBarFragment.newInstance("", "")
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.profile_bottom_bar, bottomBar)
+            .commit();
+
         //set username
         val usernameStr = intent.getStringExtra("username")
         val usernameText = findViewById<TextView>(R.id.username)
@@ -43,7 +51,7 @@ class Profile : AppCompatActivity() {
             usernameText.text = "$usernameStr."
         }
         //arrays for day and month names
-        val dayNames = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+        val dayNames = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
         val monthNames = arrayOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
 
         //get current date
@@ -51,8 +59,7 @@ class Profile : AppCompatActivity() {
         val year = c.get(Calendar.YEAR)
         val month = monthNames[c.get(Calendar.MONTH)]
         val day = c.get(Calendar.DAY_OF_MONTH)
-        val dayName = dayNames[c.get(Calendar.DAY_OF_WEEK)]
-
+        val dayName = dayNames[c.get(Calendar.DAY_OF_WEEK) - 1]
         //set date
         val dateText = findViewById<TextView>(R.id.profileDate)
         val dateStr = "$dayName, $month $day, $year."
@@ -86,7 +93,6 @@ class Profile : AppCompatActivity() {
         //When profile photo is tapped and held, take new profile photo and replaces current one
         //TODO: add better default photo
         //gonna be honest, this is mostly Ziray's code, but like, how else would I do it?
-//        val cameraButton = findViewById<Button>(R.id.editImageButton)
         profileImage.setOnLongClickListener{
             val cameraCheckPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
 
@@ -105,8 +111,8 @@ class Profile : AppCompatActivity() {
                     dialog.show()
                 }
                 else{
-                    Log.d("CAMERA", "No rationale.")
-                    requestPermission() // Will not display the request
+                    //don't display permission request
+                    requestPermission()
                 }
             }
             else{
@@ -115,8 +121,7 @@ class Profile : AppCompatActivity() {
             //setOnLongClickListener needs to return a boolean to notify if "you have actually consumed the event"
             true
         }
-
-        }
+    } /////
 
     private fun launchCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -139,6 +144,7 @@ class Profile : AppCompatActivity() {
         }
     }
 
+    //TODO: actually save photo instead of just using bitmap data?
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -152,27 +158,5 @@ class Profile : AppCompatActivity() {
             }
         }
     }
-
-} ////////
-
-    //sets saved mood
-//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP) //requirement for getDrawable()
-//    fun setMood(view: View) {
-//        val errMessage = "This doesn't work yet >:("
-//        Snackbar.make(
-//                findViewById(R.id.secondaryContainer),
-//                errMessage,
-//                Snackbar.LENGTH_SHORT
-//        ).show()
-//        moodLayout.visibility = View.GONE
-//            val btnId = view.resources
-//        Log.d("ID", btnId.toString())
-//            savedMood.setImageDrawable(getDrawable(R.drawable.meh)) //TODO: this doesn't change the mood to the selected one atm
-//        val drawble = resources.getDrawable(R.drawable.ic_training,theme)
-
-//        val chosenMood = resources.getDrawable(R.drawable.tired, theme)
-//                savedMood.setImageDrawable()
-//    }
-//
-//}
+}
 
