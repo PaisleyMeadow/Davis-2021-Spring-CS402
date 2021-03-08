@@ -24,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [BarGraphFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class BarGraphFragment : Fragment() {
+open class BarGraphFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -64,7 +64,7 @@ class BarGraphFragment : Fragment() {
         return viewOfLayout
     }
 
-    protected fun generateBarData(dataSets: Int, range: Float, count: Int): BarData? {
+    fun generateBarData(dataSets: Int, range: Float, count: Int): BarData? {
         val sets: ArrayList<IBarDataSet> = ArrayList()
         for (i in 0 until dataSets) {
             val entries: ArrayList<BarEntry> = ArrayList()
