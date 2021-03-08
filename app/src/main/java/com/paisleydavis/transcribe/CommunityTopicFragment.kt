@@ -48,6 +48,14 @@ class CommunityTopicFragment : Fragment() {
         val data = viewOfLayout.findViewById<ConstraintLayout>(R.id.data_container)
         data.visibility = View.GONE
 
+        //create graph in data container
+        val graph = BarGraphFragment.newInstance("", "")
+        parentFragmentManager.beginTransaction()
+                .replace(R.id.data_container, graph)
+                .commit();
+
+
+        //button display data container
         val button = viewOfLayout.findViewById<ImageButton>(R.id.topic_add)
         button.setOnClickListener{
             if (data.visibility == View.GONE){ Log.d("SHOW", "Show data...")
