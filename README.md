@@ -5,6 +5,8 @@
 Transcribe is a medical tracking app geared towards transgender and non-binary people. In addition to the usual medical/mood/day tracking functionality such asmedication/supplement reminders and symptom/side effect tracking, Transcribe also features a "Community" aspect. 
 Since information about HRT and other medical transitioning aspects is usually anecdotal in nature, Transcribe is meant to build off of this existing tradition, while also making this information more organized and accessible.
 
+Project 1 Demo: https://youtu.be/CzH6loHmu5Y
+
 The app is currently a WIP, but below is a description of some of its planned functionality. 
 
 _Note: It looks much less put together than my first version, but it *works* better. By that, I mean the implementation is much cleaner/smarter, and more modular, which will mean expanding on functionality in the future will be much quicker and easier._
