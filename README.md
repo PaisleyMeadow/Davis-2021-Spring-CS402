@@ -16,13 +16,14 @@ _Note: It looks much less put together than my first version, but it *works* bet
 Currently, the login button takes you directly to the profile screen.
 The sign-up button takes you to a registration form, which uses the [mailboxlayer API](https://mailboxlayer.com/) to validate the inputted email, and will eventually create a user account to be saved in an external database. 
 
-![GIF demonstrating email validation.](./documentation/email_validation_small.gif)
+![GIF demonstrating email validation.](./documentation/email_validation.gif)
+(Sorry the gifs are huge, my attempt at resizing them didn't work too well.)
 
 ### Profile
 
 The profile screen is pretty basic at the moment. The medication tabs are implemented as fragments, which can are being created programatically from user input by pressing the + button to the right of "Medications."
 
-![GIF demonstrating adding a medication](./documentation/medication_small.gif)  
+![GIF demonstrating adding a medication](./documentation/medication.gif)  
   
   
 The profile image in the upper-right can also be changed by touching and holding the current image.   
@@ -32,6 +33,6 @@ The profile image in the upper-right can also be changed by touching and holding
 
 The task bar at the bottom takes you to the community page. Here, community data will be shown, hopefully with the help of [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart), which is only partially implemented at the moment under the placeholder topic. 
   
-![GIF demonstrating community page.](./documentation/community_small.gif)
+![GIF demonstrating community page.](./documentation/community.gif)
 
 
