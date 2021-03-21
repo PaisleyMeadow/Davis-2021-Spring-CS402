@@ -27,7 +27,7 @@ The profile screen is pretty basic at the moment. The medication tabs are implem
   
   
 The profile image in the upper-right can also be changed by touching and holding the current image.   
-![GIF demonstrating changing the profile photo.](./documentation/photo_change_small.gif)  
+![GIF demonstrating changing the profile photo.](./documentation/photo_change.gif)  
 
 ### Community
 
