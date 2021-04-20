@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import io.objectbox.Box
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 

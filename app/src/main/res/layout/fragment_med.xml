@@ -3,15 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ConstraintLayout"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
+    android:background="@color/almost_white"
     tools:context=".MedFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="76dp"
+        android:layout_width="394dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/light_purple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +27,8 @@
             android:id="@+id/medNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:text="XXXX"
@@ -37,15 +42,15 @@
             android:id="@+id/medDosageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:text="10mg"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.013"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/medNameTextView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
@@ -54,24 +59,143 @@
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="108dp"
-            android:layout_marginLeft="108dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="16dp"
             android:text="Reminder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.612" />
+            android:textColor="#574D6E"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@+id/weekdayContainer"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="55dp"
-            android:layout_height="52dp"
-            android:src="@android:drawable/ic_menu_add"
+            android:id="@+id/imageView"
+            android:layout_width="46dp"
+            android:layout_height="39dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.223"
-            app:layout_constraintStart_toEndOf="@+id/switch1"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.521" />
+
+        <TableRow
+            android:id="@+id/weekdayContainer"
+            android:layout_width="169dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/medDosageTextView"
+            app:layout_constraintVertical_bias="0.25">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/ic_circle"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="M"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/ic_circle"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="T"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/ic_circle"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="W"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/ic_circle"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Th"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/ic_circle"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="F"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/ic_circle"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="S"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/ic_circle"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Su"
+                android:textSize="8sp" />
+        </TableRow>
+
+        <TextView
+            android:id="@+id/reminderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
+            android:text="0:00 am"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/weekdayContainer"
+            app:layout_constraintTop_toBottomOf="@+id/switch1"
+            app:layout_constraintVertical_bias="0.2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

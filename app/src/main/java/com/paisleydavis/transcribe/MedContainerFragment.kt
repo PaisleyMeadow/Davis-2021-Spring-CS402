@@ -6,15 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.*
 import com.google.android.material.snackbar.Snackbar
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 import kotlinx.android.synthetic.main.fragment_med.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import io.objectbox.kotlin.query
+import io.objectbox.query.QueryBuilder
+import kotlinx.android.synthetic.main.fragment_med_container.*
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "medName"
@@ -50,14 +53,41 @@ class MedContainerFragment : Fragment() {
 
         viewOfLayout = inflater.inflate(R.layout.fragment_med_container, container, false)
 
-        //place some filler med fragments into container (someday will get info from database, but ya know).
-        if(savedInstanceState == null) {
-            createNewMedFragment("Lexapro", "20mg")
-            createNewMedFragment("Androidatilisol", "5mg")
+        //hide meds
+        val medContainer = viewOfLayout.findViewById<LinearLayout>(R.id.medContainerFrame)
+        medContainer.visibility = View.GONE
+
+
+        //load meds from object box
+        val medBox: Box<MedData> = ObjectBox.boxStore.boxFor()
+
+        val res = medBox.all
+
+
+        if(res.isNotEmpty()){
+            val emptyText = viewOfLayout.findViewById<TextView>(R.id.emptyMedText)
+            emptyText.visibility = View.GONE
+
+            for(med in res){
+                createNewMedFragment(med.name, med.dosageAmount.toString())
+            }
         }
+
 
         val addButton = viewOfLayout.findViewById<ImageView>(R.id.addMedButton)
         addButton.setOnClickListener{goToAddMed()}
+
+        val expandButton = viewOfLayout.findViewById<ImageButton>(R.id.expand_med)
+        expandButton.setOnClickListener{
+            if(medContainer.visibility == View.GONE){
+                medContainer.visibility = View.VISIBLE
+                expandButton.setBackgroundResource(R.drawable.ic_expand_more)
+            }
+            else{
+                medContainer.visibility = View.GONE
+                expandButton.setBackgroundResource(R.drawable.ic_expand_less)
+            }
+        }
 
         // Inflate the layout for this fragment
         return viewOfLayout
@@ -65,8 +95,23 @@ class MedContainerFragment : Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event:NewMedEvent){
+        //hide default med container text
+        val emptyMedText = viewOfLayout.findViewById<TextView>(R.id.emptyMedText)
+        emptyMedText.visibility = View.GONE
+
+        //show meds in dropdown so user will see new med added when add med returns
+        val dropdown = viewOfLayout.findViewById<ImageButton>(R.id.expand_med)
+        dropdown.performClick()
+
         //create new med fragment
-        createNewMedFragment(event.medName, event.medDosage)
+        createNewMedFragment(event.medName, event.medDosage.toString())
+
+        //add med to objectbox
+//        val newMedData = MedData(name = event.medName, dosageAmount = event.medDosage.toLong())
+//        val medBox: Box<MedData> = ObjectBox.boxStore.boxFor()
+//
+//        medBox.put(newMedData)
+//        val results = medBox.all
     }
 
     /**
@@ -112,5 +157,12 @@ class MedContainerFragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        //temp delete meds
+        ObjectBox.boxStore.close()
+        ObjectBox.boxStore.deleteAllFiles()
     }
 }

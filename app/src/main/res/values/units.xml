@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="units_array">
+        <item>mg</item>
+        <item>mcg</item>
+        <item>pill(s)</item>
+        <item>IU</item>
+        <item>mL</item>
+        <item>L</item>
+        <item>fl oz</item>
+    </string-array>
+</resources>

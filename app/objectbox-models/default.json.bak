@@ -1,0 +1,105 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:802114137121849225",
+      "lastPropertyId": "5:8834881158103345553",
+      "name": "UserData",
+      "properties": [
+        {
+          "id": "1:2970377608578802784",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5484215456701335162",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:4963188005568498534",
+          "name": "username",
+          "type": 9
+        },
+        {
+          "id": "4:1849062235236026306",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "5:8834881158103345553",
+          "name": "password",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:2017699295731390647",
+      "lastPropertyId": "8:5629829875328563110",
+      "name": "MedData",
+      "properties": [
+        {
+          "id": "1:6318647589653046766",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4543628458941445439",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:701935594019274725",
+          "name": "dosageAmount",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:3386195989282974556",
+          "name": "dosageUnit",
+          "type": 9
+        },
+        {
+          "id": "5:7787261929389821880",
+          "name": "frequencyNum",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "6:1695468247520940460",
+          "name": "frequencyUnit",
+          "type": 9
+        },
+        {
+          "id": "7:8121276893055543983",
+          "name": "reminderOn",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "8:5629829875328563110",
+          "name": "reminderTime",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:2017699295731390647",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

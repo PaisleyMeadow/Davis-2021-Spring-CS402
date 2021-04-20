@@ -22,8 +22,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="370dp"
-        android:layout_height="364dp"
+        android:layout_width="353dp"
+        android:layout_height="447dp"
         android:layout_marginTop="19dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
@@ -34,6 +34,10 @@
             android:id="@+id/addMedName"
             android:layout_width="match_parent"
             android:layout_height="47dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ems="10"
             android:hint="Name"
             android:inputType="textPersonName"
@@ -43,15 +47,140 @@
 
         <EditText
             android:id="@+id/addMedDosage"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="103dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ems="10"
             android:hint="Dosage"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.216"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addMedName" />
+
+        <Spinner
+            android:id="@+id/units_spinner"
+            android:layout_width="139dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/addMedDosage"
+            app:layout_constraintTop_toBottomOf="@+id/addMedName" />
+
+        <LinearLayout
+            android:id="@+id/checkLayoutTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/units_spinner">
+
+            <CheckBox
+                android:id="@+id/everydayCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Every Day"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Monday"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tuesday"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/checkBox9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Wednesday"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/checkLayoutBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkLayoutTop">
+
+            <CheckBox
+                android:id="@+id/checkBox5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Thursday"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/checkBox6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Friday"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/checkBox7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Saturday"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/checkBox8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sunday"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/reminderSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:text="Reminder Notification?"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkLayoutBottom" />
+
+        <TimePicker
+            android:id="@+id/medTimePicker"
+            android:layout_width="229dp"
+            android:layout_height="159dp"
+            android:layout_marginTop="4dp"
+            android:timePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reminderSwitch" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
+//import com.github.mikephil.charting.charts.BarChart
+//import com.github.mikephil.charting.data.BarData
+//import com.github.mikephil.charting.data.BarDataSet
+//import com.github.mikephil.charting.data.BarEntry
+//import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+//import com.github.mikephil.charting.utils.ColorTemplate
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,7 +29,7 @@ open class BarGraphFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var viewOfLayout: View
-    private var chart: BarChart? = null
+//    private var chart: BarChart? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,40 +44,40 @@ open class BarGraphFragment : Fragment() {
 
         viewOfLayout = inflater.inflate(com.paisleydavis.transcribe.R.layout.fragment_bar_graph, container, false)
         // create a new chart object
-        chart = BarChart(activity);
-        chart!!.description.isEnabled = false;
+//        chart = BarChart(activity);
+//        chart!!.description.isEnabled = false;
 
 ////        val mv = MyMarkerView(activity, R.layout.custom_marker_view)
 ////        mv.setChartView(chart) // For bounds control
 //
 //        chart!!.marker = mv
 
-        chart!!.setDrawGridBackground(true);
-        chart!!.setDrawBarShadow(false);
+//        chart!!.setDrawGridBackground(true);
+//        chart!!.setDrawBarShadow(false);
 
 //        chart!!.setData(generateBarData(1, 20000f, 12));
 
         val parent: FrameLayout = viewOfLayout.findViewById(com.paisleydavis.transcribe.R.id.chart_parent)
-        parent.addView(chart)
+//        parent.addView(chart)
 
 //        // Inflate the layout for this fragment
         return viewOfLayout
     }
 
-    fun generateBarData(dataSets: Int, range: Float, count: Int): BarData? {
-        val sets: ArrayList<IBarDataSet> = ArrayList()
-        for (i in 0 until dataSets) {
-            val entries: ArrayList<BarEntry> = ArrayList()
-            for (j in 0 until count) {
-                entries.add(BarEntry(j.toFloat(), (Math.random() * range).toFloat() + range / 4))
-            }
-//            val ds = BarDataSet(entries, getLabel(i))
-//            ds.setColors(*ColorTemplate.VORDIPLOM_COLORS)
-//            sets.add(ds)
-        }
-        val d = BarData(sets)
-        return d
-    }
+//    fun generateBarData(dataSets: Int, range: Float, count: Int): BarData? {
+//        val sets: ArrayList<IBarDataSet> = ArrayList()
+//        for (i in 0 until dataSets) {
+//            val entries: ArrayList<BarEntry> = ArrayList()
+//            for (j in 0 until count) {
+//                entries.add(BarEntry(j.toFloat(), (Math.random() * range).toFloat() + range / 4))
+//            }
+////            val ds = BarDataSet(entries, getLabel(i))
+////            ds.setColors(*ColorTemplate.VORDIPLOM_COLORS)
+////            sets.add(ds)
+//        }
+//        val d = BarData(sets)
+//        return d
+//    }
 
     companion object {
         /**
