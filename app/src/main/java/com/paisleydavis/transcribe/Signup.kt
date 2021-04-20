@@ -19,7 +19,7 @@ class Signup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        val signupBtn = findViewById<Button>(R.id.signupConfirmBtn)
+        val signupBtn = findViewById<Button>(R.id.signUpPageBtn)
         signupBtn.setOnClickListener(){
             //change sign up activity
             val intent = Intent(this, Profile::class.java)

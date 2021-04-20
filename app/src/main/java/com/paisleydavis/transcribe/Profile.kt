@@ -29,7 +29,7 @@ import io.objectbox.Box
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
-//TODO: Optimize activity order -- make Profile top stack when called
+//TODO: Optimize activity order -- make Profile top stack when called; bug when going back to login page and then back to profile
 class Profile : AppCompatActivity() {
 
     //get medication container fragment
@@ -47,6 +47,7 @@ class Profile : AppCompatActivity() {
 
         //set username
         val usernameStr = intent.getStringExtra("username")
+        Log.d("NAME", usernameStr.toString())
         val usernameText = findViewById<TextView>(R.id.username)
         if (usernameStr != null) {
             usernameText.text = "$usernameStr."
@@ -83,7 +84,7 @@ class Profile : AppCompatActivity() {
                 profileImageText.visibility = View.VISIBLE
                 profileImage.alpha = 0.4f
 
-                //wait 1 second before photo goes make to normal
+                //wait 1 second before photo goes back to normal
                 Handler().postDelayed({
                     profileImageText.visibility = View.GONE
                     profileImage.alpha = 1f
