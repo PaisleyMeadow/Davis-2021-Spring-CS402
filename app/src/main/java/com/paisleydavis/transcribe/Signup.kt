@@ -43,7 +43,7 @@ class Signup : AppCompatActivity() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
-            else{ //TODO: implement password checking/matching
+            else{ //TODO: implement password requirements/compare both passwords
 
                 //check if email is valid using validation api
                 val service = EmailValidationService()
