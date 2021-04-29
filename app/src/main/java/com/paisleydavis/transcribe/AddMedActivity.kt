@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.children
 import androidx.core.view.iterator
-import kotlinx.android.synthetic.main.activity_add_med.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 

@@ -2,22 +2,22 @@ package com.paisleydavis.transcribe
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.util.Log
-import android.widget.*
-import com.google.android.material.snackbar.Snackbar
-import io.objectbox.Box
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.paisleydavis.transcribe.MedData_.userId
+import com.paisleydavis.transcribe.ObjectBox.boxStore
 import io.objectbox.kotlin.boxFor
-import kotlinx.android.synthetic.main.fragment_med.*
+import io.objectbox.Box
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import io.objectbox.kotlin.query
-import io.objectbox.query.QueryBuilder
-import kotlinx.android.synthetic.main.fragment_med_container.*
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "medName"
@@ -58,11 +58,8 @@ class MedContainerFragment : Fragment() {
         medContainer.visibility = View.GONE
 
 
-        //load meds from object box
-        val medBox: Box<MedData> = ObjectBox.boxStore.boxFor()
-
-        val res = medBox.all
-
+        //load meds from object box that belong to current user
+        val res = TranscribeApplication.getUser().meds
 
         if(res.isNotEmpty()){
             val emptyText = viewOfLayout.findViewById<TextView>(R.id.emptyMedText)
@@ -107,11 +104,20 @@ class MedContainerFragment : Fragment() {
         createNewMedFragment(event.medName, event.medDosage.toString())
 
         //add med to objectbox
-//        val newMedData = MedData(name = event.medName, dosageAmount = event.medDosage.toLong())
-//        val medBox: Box<MedData> = ObjectBox.boxStore.boxFor()
-//
-//        medBox.put(newMedData)
-//        val results = medBox.all
+        val newMedData = MedData(name = event.medName,
+            dosageAmount = event.medDosage.toLong(), dosageUnit = event.medUnit, frequencyDays = event.medFrequency.toString(),
+            reminderOn = event.medReminder, reminderHour = event.medHour, reminderMinute = event.medMinute)
+        // associate with user
+        newMedData.user.target = TranscribeApplication.getUser()
+        TranscribeApplication.getUser().meds.add(newMedData)
+        boxStore.boxFor(UserData::class.java).put(TranscribeApplication.getUser())
+
+        boxStore.boxFor(MedData::class.java).put(newMedData)
+        val medBox: Box<MedData> = boxStore.boxFor()
+        medBox.put(newMedData)
+        val results = boxStore.boxFor(MedData::class.java).all
+        Log.d("MEDS", results.toString())
+        Log.d("CURRENT", TranscribeApplication.getUser().toString())
     }
 
     /**
@@ -161,8 +167,8 @@ class MedContainerFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        //temp delete meds
-        ObjectBox.boxStore.close()
-        ObjectBox.boxStore.deleteAllFiles()
+//        //temp delete meds
+//        ObjectBox.boxStore.close()
+//        ObjectBox.boxStore.deleteAllFiles()
     }
 }

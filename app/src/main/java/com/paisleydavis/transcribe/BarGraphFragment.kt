@@ -4,14 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-//import com.github.mikephil.charting.charts.BarChart
-//import com.github.mikephil.charting.data.BarData
-//import com.github.mikephil.charting.data.BarDataSet
-//import com.github.mikephil.charting.data.BarEntry
-//import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-//import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.aachartmodel.aainfographics.aachartcreator.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,42 +36,51 @@ open class BarGraphFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        viewOfLayout = inflater.inflate(com.paisleydavis.transcribe.R.layout.fragment_bar_graph, container, false)
-        // create a new chart object
-//        chart = BarChart(activity);
-//        chart!!.description.isEnabled = false;
+        // create chart for top 3 or 5 or something side effects
+        viewOfLayout = inflater.inflate(com.paisleydavis.transcribe.R.layout.fragment_topic_graph, container, false)
 
-////        val mv = MyMarkerView(activity, R.layout.custom_marker_view)
-////        mv.setChartView(chart) // For bounds control
-//
-//        chart!!.marker = mv
+        val aaChartView = viewOfLayout.findViewById<AAChartView>(R.id.frag_chart)
 
-//        chart!!.setDrawGridBackground(true);
-//        chart!!.setDrawBarShadow(false);
+        val aaChartModel : AAChartModel = AAChartModel()
+            .chartType(AAChartType.Column)
+            .title("Timeframe and Frequency of Common Effects")
+            .backgroundColor(R.color.almost_white)
+            .dataLabelsEnabled(true)
+            .xAxisLabelsEnabled(true)
+            .yAxisTitle("Users")
+            .categories(arrayOf("Weight Loss", "Increased Appetite", "Extreme Mood Swings"))
+                // categories are x-axis labels
+            .series(arrayOf(
+                AASeriesElement()
+                    .name("After 1 Month") // 1 bar per array entry for each item in time period
+                    .data(arrayOf(
+                        arrayOf("Weight Loss", 4),
+                        arrayOf("Increased Appetite", 7),
+                        arrayOf("Extreme Mood Swings", 5)
+                    )),
+                AASeriesElement()
+                    .name("After 3 Months")
+                    .data(arrayOf(
+                        arrayOf("Weight Loss", 2),
+                        arrayOf("Increased Appetite", 2),
+                        arrayOf("Extreme Mood Swings", 3)
+                    )),
+                AASeriesElement()
+                    .name("After 6 Months")
+                    .data(arrayOf(
+                        arrayOf("Weight Loss", 1),
+                        arrayOf("Increased Appetite", 7),
+                        arrayOf("Extreme Mood Swings", 3)
+                    ))
+            )
+            )
 
-//        chart!!.setData(generateBarData(1, 20000f, 12));
+        //The chart view object calls the instance object of AAChartModel and draws the final graphic
+        aaChartView.aa_drawChartWithChartModel(aaChartModel)
 
-        val parent: FrameLayout = viewOfLayout.findViewById(com.paisleydavis.transcribe.R.id.chart_parent)
-//        parent.addView(chart)
-
-//        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         return viewOfLayout
     }
-
-//    fun generateBarData(dataSets: Int, range: Float, count: Int): BarData? {
-//        val sets: ArrayList<IBarDataSet> = ArrayList()
-//        for (i in 0 until dataSets) {
-//            val entries: ArrayList<BarEntry> = ArrayList()
-//            for (j in 0 until count) {
-//                entries.add(BarEntry(j.toFloat(), (Math.random() * range).toFloat() + range / 4))
-//            }
-////            val ds = BarDataSet(entries, getLabel(i))
-////            ds.setColors(*ColorTemplate.VORDIPLOM_COLORS)
-////            sets.add(ds)
-//        }
-//        val d = BarData(sets)
-//        return d
-//    }
 
     companion object {
         /**

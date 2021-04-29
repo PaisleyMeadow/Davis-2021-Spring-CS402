@@ -1,0 +1,75 @@
+{
+  "name": "Testosterone",
+  "intro": "Answer the following questions to help contribute to the community knowledge base.",
+  "sections": [
+    "A little about you...",
+    {
+      "questions": [
+        "How old are you?",
+        {
+          "type": "num"
+        },
+        "Are you a:",
+        {
+          "type": "multi",
+          "answers": [
+            "Man",
+            "Woman",
+            "Non-binary Person",
+            "Other"
+          ]
+        },
+        "How long have you been taking testosterone?",
+        {
+          "type": "multi",
+          "answers": [
+            "< 6 months",
+            "Between 6 months to a year",
+            "> 1 year",
+            "2-3 years",
+            "4-5 years",
+            "> 5 years"
+          ]
+        },
+        "What method of delivery do you use?",
+        {
+          "type": "multi",
+          "answers": [
+            "Oral Capsule",
+            "Topical Gel",
+            "Dermal Patch",
+            "Implant",
+            "Subcutaneous Injection",
+            "Intramuscular Injections"
+          ]
+        }
+      ]
+    },
+
+      "Within or during the 1st month of starting T (testosterone) treatments:",
+    {
+      "questions": [
+        "Did you experience weight gain?",
+        {
+          "type": "yesno",
+          "answers": [
+            "Yes",
+            "No"
+          ]
+        },
+        "Did you experience increased facial acne?",
+        {
+          "type": "yesno",
+          "answers": [
+            "Yes",
+            "No"
+          ]
+        }
+      ]
+    },
+    {
+
+    }
+  ]
+
+}

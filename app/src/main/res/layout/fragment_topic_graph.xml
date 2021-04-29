@@ -4,10 +4,13 @@
     android:id="@+id/chart_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
     tools:context=".BarGraphFragment">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/chart"
+    <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
+        android:id="@+id/frag_chart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+    </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
 </FrameLayout>

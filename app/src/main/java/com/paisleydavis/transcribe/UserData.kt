@@ -1,13 +1,21 @@
 package com.paisleydavis.transcribe
+import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
+import io.objectbox.annotation.Unique
+import io.objectbox.relation.ToMany
 
+// TODO: this should be in a firebase db or something, but for now...
 @Entity
 data class UserData (
     @Id
     var id:Long = 0,
-    var title:String = "New User",
+    @Unique
     var username:String = "",
     var email:String = "",
-    var password:String = ""
-)
+    var password:String,
+    var theme:String = "default"
+){
+    @Backlink(to = "user")
+    lateinit var meds: ToMany<MedData> // store all meds uploaded by user
+}

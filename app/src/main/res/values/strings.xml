@@ -20,4 +20,5 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="medications_and_supplements"><![CDATA[Medications & Supplements]]></string>
+    <string name="contribute_survey">Contribute</string>
 </resources>

@@ -30,7 +30,7 @@ class BottomBarFragment : Fragment() {
             R.id.home_icon -> {
                 if(activity?.javaClass?.simpleName.toString() != "Profile") {
                     val intent = Intent(activity, Profile::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent)
                 }
                 true
@@ -38,7 +38,7 @@ class BottomBarFragment : Fragment() {
             R.id.community_icon -> {
                 if(activity?.javaClass?.simpleName.toString() != "Community") {
                     val intent = Intent(activity, Community::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent)
                 }
                 true

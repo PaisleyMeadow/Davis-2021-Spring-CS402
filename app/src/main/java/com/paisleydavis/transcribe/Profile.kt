@@ -26,7 +26,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import io.objectbox.Box
-import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
 //TODO: Optimize activity order -- make Profile top stack when called; bug when going back to login page and then back to profile
@@ -45,8 +44,9 @@ class Profile : AppCompatActivity() {
             .replace(R.id.profile_bottom_bar, bottomBar)
             .commit();
 
-        //set username
         val usernameStr = intent.getStringExtra("username")
+
+        //display username in activity
         Log.d("NAME", usernameStr.toString())
         val usernameText = findViewById<TextView>(R.id.username)
         if (usernameStr != null) {

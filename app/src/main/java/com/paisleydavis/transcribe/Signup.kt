@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import com.google.android.material.snackbar.Snackbar
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,20 +39,23 @@ class Signup : AppCompatActivity() {
                         .hideSoftInputFromWindow(windowToken, 0) }
 
                 val errMessage = "Please fill out your information before continuing."
-                Snackbar.make(
-                    findViewById(R.id.signupLayout),
-                    errMessage,
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                displayErrorMessage(errMessage)
             }
-            else{ //TODO: implement password requirements/compare both passwords
+            else if(passwordInput.text.toString() != password2Input.text.toString()){
+                val errMessage = "Passwords do not match."
+                displayErrorMessage(errMessage)
+            } // check to see if username already exists in db
+            else if(ObjectBox.boxStore.boxFor(UserData::class.java).query().equal(UserData_.username, usernameInput.text.toString()).build().find().isNotEmpty()){
+                displayErrorMessage("Username already taken.")
+            }
+            else{
 
                 //check if email is valid using validation api
                 val service = EmailValidationService()
 
                 val callback = object: Callback<EmailValidationResponse> {
                     override fun onFailure(call: Call<EmailValidationResponse>, t: Throwable) {
-                        Log.e("EMAIL_VALIDATION", "Error")
+                        displayErrorMessage("Error validating email, please try again.")
                     }
 
                     override fun onResponse(
@@ -73,8 +78,12 @@ class Signup : AppCompatActivity() {
                                 }
                                 displayErrorMessage(errorMessage)
                             }
-                            else{ //otherwise, data is accepted and goes to Profile activity
+                            else{ //otherwise, user data is accepted and goes to Profile activity
                                 intent.putExtra("username", usernameInput.text.toString())
+
+                                // put into db
+                                addUser(usernameInput.text.toString(), userEmail.text.toString(), passwordInput.text.toString())
+
                                 startActivity(intent)
                             }
                         }
@@ -84,6 +93,17 @@ class Signup : AppCompatActivity() {
             }
 
         }
+    }
+
+    /**
+     * add user data to database
+     */
+    private fun addUser(username: String, email: String, password: String) {
+
+        val newUserData = UserData(username = username, password = password)
+
+        // set global user
+        TranscribeApplication.setUser(newUserData)
     }
 
     private fun displayErrorMessage(message: String) {

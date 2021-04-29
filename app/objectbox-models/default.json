@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:802114137121849225",
-      "lastPropertyId": "5:8834881158103345553",
+      "lastPropertyId": "8:865057158547995755",
       "name": "UserData",
       "properties": [
         {
@@ -15,22 +15,24 @@
           "flags": 1
         },
         {
-          "id": "2:5484215456701335162",
-          "name": "title",
-          "type": 9
-        },
-        {
           "id": "3:4963188005568498534",
           "name": "username",
+          "indexId": "2:3296588237711321133",
+          "type": 9,
+          "flags": 2080
+        },
+        {
+          "id": "6:8263201621801310128",
+          "name": "theme",
           "type": 9
         },
         {
-          "id": "4:1849062235236026306",
+          "id": "7:8213326145131118980",
           "name": "email",
           "type": 9
         },
         {
-          "id": "5:8834881158103345553",
+          "id": "8:865057158547995755",
           "name": "password",
           "type": 9
         }
@@ -39,7 +41,7 @@
     },
     {
       "id": "2:2017699295731390647",
-      "lastPropertyId": "11:1629315412081505426",
+      "lastPropertyId": "12:5906934821619564062",
       "name": "MedData",
       "properties": [
         {
@@ -86,13 +88,58 @@
           "name": "reminderMinute",
           "type": 5,
           "flags": 4
+        },
+        {
+          "id": "12:5906934821619564062",
+          "name": "userId",
+          "indexId": "1:7735393792627312674",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "UserData"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:4942517691991857700",
+      "lastPropertyId": "6:2212497573312502502",
+      "name": "SurveyData",
+      "properties": [
+        {
+          "id": "1:5643599470996455464",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8532071687715494502",
+          "name": "topic",
+          "type": 9
+        },
+        {
+          "id": "3:8957613205075437057",
+          "name": "userId",
+          "indexId": "3:4480992101897670875",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "UserData"
+        },
+        {
+          "id": "5:3910796488637637320",
+          "name": "data",
+          "type": 9
+        },
+        {
+          "id": "6:2212497573312502502",
+          "name": "dateOfEntry",
+          "type": 10
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "2:2017699295731390647",
-  "lastIndexId": "0:0",
+  "lastEntityId": "3:4942517691991857700",
+  "lastIndexId": "3:4480992101897670875",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -102,7 +149,11 @@
   "retiredPropertyUids": [
     7787261929389821880,
     1695468247520940460,
-    5629829875328563110
+    5629829875328563110,
+    5484215456701335162,
+    1849062235236026306,
+    8834881158103345553,
+    4146423389082671733
   ],
   "retiredRelationUids": [],
   "version": 1

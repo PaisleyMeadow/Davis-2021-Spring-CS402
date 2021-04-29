@@ -1,11 +1,13 @@
 package com.paisleydavis.transcribe
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -51,19 +53,29 @@ class CommunityTopicFragment : Fragment() {
         //create graph in data container
         val graph = BarGraphFragment.newInstance("", "")
         parentFragmentManager.beginTransaction()
-                .replace(R.id.data_container, graph)
+                .replace(R.id.graph_container, graph)
                 .commit();
 
 
         //button display data container
         val button = viewOfLayout.findViewById<ImageButton>(R.id.topic_add)
         button.setOnClickListener{
-            if (data.visibility == View.GONE){ Log.d("SHOW", "Show data...")
+            if (data.visibility == View.GONE){
                 data.visibility = View.VISIBLE
             }
-            else{ Log.d("HIDE", "Show data...")
+            else{
                 data.visibility = View.GONE
             }
+        }
+
+        //event for "contribute" activity
+        val contribute = viewOfLayout.findViewById<Button>(R.id.comm_contribute)
+        contribute.setOnClickListener{
+            // go to contribute activity on button press
+            val intent = Intent(activity, Contribute::class.java)
+            // pass title of topic to contribute activity
+            intent.putExtra("topic", topicTitle.toString())
+            startActivity(intent)
         }
 
         // Inflate the layout for this fragment
@@ -75,16 +87,16 @@ class CommunityTopicFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
+         * @param topicTitle Parameter 1.
          * @param param2 Parameter 2.
          * @return A new instance of fragment CommunityTopicFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(topicTitle: String, param2: String) =
             CommunityTopicFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM1, topicTitle)
                     putString(ARG_PARAM2, param2)
                 }
             }

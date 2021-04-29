@@ -11,6 +11,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import io.objectbox.Box
+import io.objectbox.exception.NonUniqueResultException
+import io.objectbox.kotlin.boxFor
+import io.objectbox.query.QueryBuilder
 import org.w3c.dom.Text
 
 class Login : AppCompatActivity() {
@@ -22,11 +26,12 @@ class Login : AppCompatActivity() {
 
         val loginBtn = findViewById<Button>(R.id.loginPageBtn)
         loginBtn.setOnClickListener{
-            //get username to pass in intent
-            val username = findViewById<TextView>(R.id.loginName).text
-            val password = findViewById<TextView>(R.id.loginPass).text
+            //get username  and password as strings
+            val username = findViewById<TextView>(R.id.loginName).text.toString()
+            val password = findViewById<TextView>(R.id.loginPass).text.toString()
 
-            if(username.toString().isEmpty() || password.toString().isEmpty()){
+
+            if(username.isEmpty() || password.isEmpty()){
                 //the simplest way I found to hide the soft keyboard (because it's weirdly difficult to)
                 (currentFocus ?: View(this))
                         .apply { (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
@@ -34,11 +39,30 @@ class Login : AppCompatActivity() {
                 displayErrorMessage("Please provide your account information.")
             }
             else {
-                //change to profile activity
-                val intent = Intent(this, Profile::class.java)
-                intent.putExtra("username", username.toString())
 
-                startActivity(intent)
+                // check if this user exists
+                val userBox: Box<UserData> = ObjectBox.boxStore.boxFor()
+                val query = userBox.query().run {
+                    equal(UserData_.username, username)
+                    equal(UserData_.password, password)
+                    order(UserData_.username)
+                    build()
+                }
+
+                val user = query.findUnique()
+                if (user != null) {
+                    // set global user
+                    TranscribeApplication.setUser(user)
+
+                    // change to profile activity
+                    val intent = Intent(this, Profile::class.java)
+                    intent.putExtra("username", username)
+
+                    startActivity(intent)
+                }
+                else{
+                    displayErrorMessage("User not found.")
+                }
             }
         }
     }
