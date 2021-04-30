@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import androidx.viewbinding.BuildConfig
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +37,11 @@ class MainActivity : AppCompatActivity() {
             //for now, go to my personal site -- I'll make a page for it off of my domain eventually
             val url = "https://www.paisleymdavis.com"
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        }
+
+        // for build variant
+        if(BuildConfig.BUILD_TYPE.equals("staging")){
+            Log.i("STAGING:", "You are currently using a version of the app used for staging.")
         }
     }
 
