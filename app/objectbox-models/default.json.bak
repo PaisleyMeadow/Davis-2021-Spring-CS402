@@ -121,7 +121,7 @@
           "name": "userId",
           "indexId": "3:4480992101897670875",
           "type": 11,
-          "flags": 524,
+          "flags": 1548,
           "relationTarget": "UserData"
         },
         {

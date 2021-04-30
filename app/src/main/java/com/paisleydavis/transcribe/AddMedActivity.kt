@@ -118,7 +118,7 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
 
             if(nameText != "" && dosageText != ""){
                 //trigger event bus observer in MedContainerFragment
-                EventBus.getDefault().post(NewMedEvent(nameText, dosageText.toLong(), dosageUnit as String, selectedDays, reminderSwitch.isChecked, reminderHour, reminderMinute))
+                EventBus.getDefault().post(NewMedEvent(nameText, dosageText.toLong(), dosageUnit as String, selectedDays.toString(), reminderSwitch.isChecked, reminderHour, reminderMinute))
 
                 //finish this activity
                 finish()

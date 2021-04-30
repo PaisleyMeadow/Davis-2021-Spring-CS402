@@ -69,7 +69,7 @@ class MedContainerFragment : Fragment() {
             emptyText.visibility = View.GONE
 
             for(med in res){
-                createNewMedFragment(med.name, med.dosageAmount.toString())
+                createNewMedFragment(med.name, med.dosageAmount, med.dosageUnit, med.frequencyDays, med.reminderOn, med.reminderHour, med.reminderMinute)
             }
         }
 
@@ -104,11 +104,11 @@ class MedContainerFragment : Fragment() {
         dropdown.performClick()
 
         //create new med fragment
-        createNewMedFragment(event.medName, event.medDosage.toString())
+        createNewMedFragment(event.medName, event.medDosage, event.medUnit, event.medFrequency, event.medReminder, event.medHour, event.medMinute)
 
         //add med to objectbox
         val newMedData = MedData(name = event.medName,
-            dosageAmount = event.medDosage.toLong(), dosageUnit = event.medUnit, frequencyDays = event.medFrequency.toString(),
+            dosageAmount = event.medDosage, dosageUnit = event.medUnit, frequencyDays = event.medFrequency,
             reminderOn = event.medReminder, reminderHour = event.medHour, reminderMinute = event.medMinute)
         // associate with user
         newMedData.user.target = TranscribeApplication.getUser()
@@ -118,9 +118,9 @@ class MedContainerFragment : Fragment() {
         boxStore.boxFor(MedData::class.java).put(newMedData)
         val medBox: Box<MedData> = boxStore.boxFor()
         medBox.put(newMedData)
-        val results = boxStore.boxFor(MedData::class.java).all
-        Log.d("MEDS", results.toString())
-        Log.d("CURRENT", TranscribeApplication.getUser().toString())
+//        val results = boxStore.boxFor(MedData::class.java).all
+//        Log.d("MEDS", results.toString())
+//        Log.d("CURRENT", TranscribeApplication.getUser().toString())
     }
 
     /**
@@ -134,8 +134,8 @@ class MedContainerFragment : Fragment() {
     /**
      * Create new medication fragment
      */
-    private fun createNewMedFragment(name: String, dosage: String) {
-        val newMedFragment = MedFragment.newInstance(name, dosage)
+    private fun createNewMedFragment(name: String, dosage: Long, unit: String, freq: String, reminder: Boolean, hour: Int, minute: Int) {
+        val newMedFragment = MedFragment.newInstance(name, dosage, unit, freq, reminder, hour, minute)
 
         //will have to worry about state here eventually (probably anyways)
         //TODO: ask Michael about fragmentManager deprecation

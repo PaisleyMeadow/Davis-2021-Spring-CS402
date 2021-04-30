@@ -14,7 +14,7 @@ data class MedData (
     val frequencyDays:String = "",
     val reminderOn:Boolean = false,
     val reminderHour:Int = 0,
-    val reminderMinute:Int = 0
+    val reminderMinute:Int = 0,
 ){
     //relation to User
     lateinit var user: ToOne<UserData> // for 1-to-many relation with user (user -> meds)
