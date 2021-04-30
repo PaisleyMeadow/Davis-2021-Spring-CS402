@@ -58,6 +58,7 @@ Later, this data will be what is used to create the graphs under each topic.
 
 ## Other Info
 
+Video demo can be viewed [here.](https://drive.google.com/file/d/1n6UoygpFSYBAmYKhXFWuMNAWRxUAU_tJ/view?usp=sharing)
 A **signed app bundle** is available in the `export` folder..   
 The **Play Store Icon** is available in the ``marketing` folder as `ic_launcher-playstore.png`. 
 
