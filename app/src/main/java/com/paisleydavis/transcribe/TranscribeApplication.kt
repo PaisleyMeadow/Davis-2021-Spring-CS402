@@ -30,5 +30,8 @@ class TranscribeApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         ObjectBox.init(this)
+
+        // initalize user TODO: could use this in staging variant
+        user = UserData(username = "", password = "")
     }
 }

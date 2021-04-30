@@ -36,7 +36,7 @@ open class BarGraphFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // create chart for top 3 or 5 or something side effects
+        // create example chart for now
         viewOfLayout = inflater.inflate(com.paisleydavis.transcribe.R.layout.fragment_topic_graph, container, false)
 
         val aaChartView = viewOfLayout.findViewById<AAChartView>(R.id.frag_chart)

@@ -81,7 +81,7 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
             }
         }
 
-        // unchecking a checbox should uncheck the "every day" box
+        // unchecking a checkbox should uncheck the "every day" box
         for(box in checkboxes){
             if(box != everydayCheck) {
                 box.setOnClickListener {

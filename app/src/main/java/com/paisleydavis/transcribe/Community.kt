@@ -8,20 +8,23 @@ class Community : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community)
 
-        //initialize bottom bar fragment
+        //initialize bottom menu bar fragment
         val bottomBar = BottomBarFragment.newInstance("", "")
         supportFragmentManager.beginTransaction()
             .replace(R.id.community_bottom_bar, bottomBar)
             .commit();
 
-        //initialize some filler community topic fragments
-        createTopicFragment("Testosterone")
+        // initialize list topic fragment
+        supportFragmentManager.beginTransaction()
+            .add(R.id.community_search_frame_layout, TopicFragment())
+            .commit()
+
     }
 
     private fun createTopicFragment(topicTitle: String) {
-        val topicFragment = CommunityTopicFragment.newInstance(topicTitle, "")
-        supportFragmentManager.beginTransaction()
-            .add(R.id.categories_layout, topicFragment)
-            .commit();
+//        val topicFragment = CommunityTopicFragment.newInstance(topicTitle, "")
+//        supportFragmentManager.beginTransaction()
+//            .add(R.id.categories_layout, topicFragment)
+//            .commit();
     }
 }

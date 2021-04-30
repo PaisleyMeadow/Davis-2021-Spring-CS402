@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.paisleydavis.transcribe.MedData_.userId
 import com.paisleydavis.transcribe.ObjectBox.boxStore
 import io.objectbox.kotlin.boxFor
 import io.objectbox.Box
