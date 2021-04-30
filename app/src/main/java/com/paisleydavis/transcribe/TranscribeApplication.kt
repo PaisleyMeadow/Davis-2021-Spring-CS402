@@ -1,9 +1,9 @@
 package com.paisleydavis.transcribe
 
 import android.app.Application
-import android.util.Log
+import com.paisleydavis.transcribe.dataClasses.UserData
+import com.paisleydavis.transcribe.dataClasses.UserData_
 import io.objectbox.Box
-import io.objectbox.android.AndroidObjectBrowser
 import io.objectbox.kotlin.boxFor
 
 class TranscribeApplication: Application() {

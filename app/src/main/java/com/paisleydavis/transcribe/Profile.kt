@@ -25,6 +25,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.paisleydavis.transcribe.fragments.BottomBarFragment
+import com.paisleydavis.transcribe.fragments.MedContainerFragment
 import io.objectbox.Box
 import java.util.*
 

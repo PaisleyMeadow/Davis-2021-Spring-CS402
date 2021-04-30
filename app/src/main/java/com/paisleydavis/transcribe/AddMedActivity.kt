@@ -8,9 +8,8 @@ import android.view.View
 import android.util.Log
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.SwitchCompat
-import androidx.core.view.children
 import androidx.core.view.iterator
+import com.paisleydavis.transcribe.dataClasses.NewMedEvent
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 

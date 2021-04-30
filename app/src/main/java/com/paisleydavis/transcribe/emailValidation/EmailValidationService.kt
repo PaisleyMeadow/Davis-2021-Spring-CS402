@@ -1,6 +1,5 @@
-package com.paisleydavis.transcribe
+package com.paisleydavis.transcribe.emailValidation
 
-import android.widget.EditText
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

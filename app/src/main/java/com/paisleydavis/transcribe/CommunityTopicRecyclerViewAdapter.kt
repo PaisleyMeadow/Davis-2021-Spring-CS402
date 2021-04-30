@@ -17,6 +17,7 @@ import androidx.fragment.app.findFragment
 import com.google.android.material.internal.ContextUtils.getActivity
 
 import com.paisleydavis.transcribe.dummy.CommunityTopicRepository.TopicItem
+import com.paisleydavis.transcribe.fragments.BarGraphFragment
 
 /**
  * [RecyclerView.Adapter] that can display a [TopicItem].

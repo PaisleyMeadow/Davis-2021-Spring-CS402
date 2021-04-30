@@ -1,4 +1,4 @@
-package com.paisleydavis.transcribe
+package com.paisleydavis.transcribe.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.aachartmodel.aainfographics.aachartcreator.*
+import com.paisleydavis.transcribe.R
 
 
 // TODO: Rename parameter arguments, choose names that match

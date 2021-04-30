@@ -1,4 +1,5 @@
-package com.paisleydavis.transcribe
+package com.paisleydavis.transcribe.dataClasses
+import com.paisleydavis.transcribe.dataClasses.MedData
 import io.objectbox.annotation.Backlink
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id

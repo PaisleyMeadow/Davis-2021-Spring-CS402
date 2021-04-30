@@ -1,4 +1,4 @@
-package com.paisleydavis.transcribe
+package com.paisleydavis.transcribe.dataClasses
 
 import java.util.*
 

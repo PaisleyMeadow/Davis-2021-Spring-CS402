@@ -1,6 +1,7 @@
 package com.paisleydavis.transcribe
 import android.content.Context
 import android.util.Log
+import com.paisleydavis.transcribe.dataClasses.MyObjectBox
 import io.objectbox.BoxStore
 import io.objectbox.android.AndroidObjectBrowser
 

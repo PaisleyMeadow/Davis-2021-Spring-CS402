@@ -2,6 +2,8 @@ package com.paisleydavis.transcribe
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.paisleydavis.transcribe.fragments.BottomBarFragment
+import com.paisleydavis.transcribe.fragments.TopicFragment
 
 class Community : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,19 +3,16 @@ package com.paisleydavis.transcribe
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.paisleydavis.transcribe.dataClasses.UserData
+import com.paisleydavis.transcribe.dataClasses.UserData_
 import io.objectbox.Box
-import io.objectbox.exception.NonUniqueResultException
 import io.objectbox.kotlin.boxFor
-import io.objectbox.query.QueryBuilder
-import org.w3c.dom.Text
 
 class Login : AppCompatActivity() {
     //TODO: implement the logging in (lol) - might do Firebase db, idk yet

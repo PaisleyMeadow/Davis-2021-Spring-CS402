@@ -1,4 +1,4 @@
-package com.paisleydavis.transcribe
+package com.paisleydavis.transcribe.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.paisleydavis.transcribe.*
 import com.paisleydavis.transcribe.ObjectBox.boxStore
+import com.paisleydavis.transcribe.dataClasses.MedData
+import com.paisleydavis.transcribe.dataClasses.NewMedEvent
+import com.paisleydavis.transcribe.dataClasses.UserData
 import io.objectbox.kotlin.boxFor
 import io.objectbox.Box
 import org.greenrobot.eventbus.EventBus
@@ -90,7 +94,7 @@ class MedContainerFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event:NewMedEvent){
+    fun onEvent(event: NewMedEvent){
         //hide default med container text
         val emptyMedText = viewOfLayout.findViewById<TextView>(R.id.emptyMedText)
         emptyMedText.visibility = View.GONE

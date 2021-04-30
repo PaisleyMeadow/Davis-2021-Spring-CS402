@@ -1,11 +1,8 @@
-package com.paisleydavis.transcribe
+package com.paisleydavis.transcribe.dataClasses
 
-import io.objectbox.annotation.Convert
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
-import io.objectbox.converter.PropertyConverter
 import io.objectbox.relation.ToOne
-import java.io.Serializable
 
 @Entity
 data class MedData (

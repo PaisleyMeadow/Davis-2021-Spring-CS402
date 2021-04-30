@@ -1,4 +1,4 @@
-package com.paisleydavis.transcribe
+package com.paisleydavis.transcribe.emailValidation
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
