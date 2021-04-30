@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         // for build variant
-        if(BuildConfig.BUILD_TYPE.equals("staging")){
-            Log.i("STAGING:", "You are currently using a version of the app used for staging.")
+        if(com.paisleydavis.transcribe.BuildConfig.BUILD_TYPE.equals("staging")){
+            Log.d("STAGING:", "You are currently using a version of the app used for staging.")
         }
     }
 
