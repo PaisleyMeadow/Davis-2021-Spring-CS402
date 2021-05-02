@@ -1,16 +1,27 @@
 package com.paisleydavis.transcribe.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import com.paisleydavis.transcribe.AddMedActivity
+import com.paisleydavis.transcribe.ObjectBox
 import com.paisleydavis.transcribe.R
+import com.paisleydavis.transcribe.TranscribeApplication
+import com.paisleydavis.transcribe.dataClasses.MedData
+import com.paisleydavis.transcribe.dataClasses.MedData_
+import com.paisleydavis.transcribe.dataClasses.UserData
+import com.paisleydavis.transcribe.dataClasses.UserData_
+import io.objectbox.kotlin.boxFor
+import io.objectbox.relation.ToMany
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_MED_NAME = "medName"
@@ -65,18 +76,81 @@ class MedFragment : Fragment() {
         // change the color of the appropriate weekday bubbles
         changeWeekdays(frequency)
 
+        //set click listener for edit med button
+        val editButton = viewOfLayout.findViewById<ImageView>(R.id.edit_med)
+        editButton.setOnClickListener{
+            val intent = Intent(activity, AddMedActivity::class.java)
+            intent.putExtra("edit", true)
+            intent.putExtra("medName", medName)
+            startActivity(intent)
+
+            // delete fragment and med from db
+//            parentFragmentManager.beginTransaction().remove(this).commit()
+//            val medBox = ObjectBox.boxStore.boxFor(MedData::class.java)
+//            val med = medBox.query().equal(MedData_.userId, TranscribeApplication.getUser().id).equal(MedData_.name, medName.toString())
+//                .build().find()
+//            medBox.query().equal(MedData_.userId, TranscribeApplication.getUser().id).equal(MedData_.name, medName.toString())
+//                .build().remove()
+//            // don't forget user to med relation...
+//            TranscribeApplication.getUser().meds.remove(med)
+//            TranscribeApplication.getUser().meds.applyChangesToDb()
+        }
+
         // Inflate the layout for this fragment
         return viewOfLayout
     }
 
+    /**
+     * takes string of chosen weekdays for medication and marks the appropriate weekday "bubbles" in the fragment
+     */
     private fun changeWeekdays(frequency: String?) {
         val dayList = frequency?.replace("[", "")?.replace("]", "")?.split(", ")
-
         val container = viewOfLayout.findViewById<TableRow>(R.id.weekdayContainer)
-        val bubbles = container.children
-        for(b in bubbles){
-            Log.d("CHILD", b.toString())
-            b.background = ""
+        val temp = container.children
+
+        // this could probably be done better buuuut whatevs
+
+        val bubbles = arrayListOf<TextView>()
+        for(t in temp){
+            val b = t as TextView
+            bubbles.add(b)
+
+        }
+
+        if (dayList != null) {
+            for(chosenDay in dayList){
+                when(chosenDay.substring(0, 2)){
+                    "Su" -> {
+                        val b = bubbles.find{ it.text.toString().equals("Su")}
+                        b?.setBackgroundResource(R.drawable.ic_circle)
+                    }
+                    "Mo" -> {
+                        val b = bubbles.find{ it.text.toString().equals("M")}
+                        b?.setBackgroundResource(R.drawable.ic_circle)
+                    }
+                    "Tu" -> {
+                        val b = bubbles.find{ it.text.toString().equals("T")}
+                        b?.setBackgroundResource(R.drawable.ic_circle)
+                    }
+                    "We" -> {
+                        val b = bubbles.find{ it.text.toString().equals("W")}
+                        b?.setBackgroundResource(R.drawable.ic_circle)
+                    }
+                    "Th" -> {
+                        val b = bubbles.find{ it.text.toString().equals("Th")}
+                        b?.setBackgroundResource(R.drawable.ic_circle)
+                    }
+                    "Fr" -> {
+                        val b = bubbles.find{ it.text.toString().equals("F")}
+                        b?.setBackgroundResource(R.drawable.ic_circle)
+                    }
+                    "Sa" -> {
+                        val b = bubbles.find{ it.text.toString().equals("S")}
+                        b?.setBackgroundResource(R.drawable.ic_circle)
+                    }
+                }
+            }
+
         }
     }
 
@@ -96,18 +170,26 @@ class MedFragment : Fragment() {
                 periodStr = "AM"
             }
             // add leading 0 if necessary
-            if(reminderMinute < 10){
-                timeStr = ":0$reminderMinute"
-            }
-            else{
-                timeStr = ":$reminderMinute"
+            timeStr += if(reminderMinute < 10){
+                ":0$reminderMinute"
+            } else{
+                ":$reminderMinute"
             }
 
             time.text = "$timeStr $periodStr"
             switch.isChecked = true
         }
         else{
-            time.visibility == View.GONE
+            time.visibility = View.GONE
+        }
+
+        switch.setOnClickListener{
+            if(time.visibility == View.GONE){
+                time.visibility = View.VISIBLE
+            }
+            else{
+                time. visibility = View.GONE
+            }
         }
     }
 

@@ -8,13 +8,13 @@ import io.objectbox.relation.ToOne
 data class MedData (
     @Id
     var id:Long = 0,
-    val name:String = "",
-    val dosageAmount:Long = 0,
-    val dosageUnit:String = "",
-    val frequencyDays:String = "",
-    val reminderOn:Boolean = false,
-    val reminderHour:Int = 0,
-    val reminderMinute:Int = 0,
+    var name:String = "",
+    var dosageAmount:Long = 0,
+    var dosageUnit:String = "",
+    var frequencyDays:String = "",
+    var reminderOn:Boolean = false,
+    var reminderHour:Int = 0,
+    var reminderMinute:Int = 0,
 ){
     //relation to User
     lateinit var user: ToOne<UserData> // for 1-to-many relation with user (user -> meds)

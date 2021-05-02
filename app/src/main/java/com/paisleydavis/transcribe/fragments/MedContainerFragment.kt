@@ -60,7 +60,6 @@ class MedContainerFragment : Fragment() {
         val medContainer = viewOfLayout.findViewById<LinearLayout>(R.id.medContainerFrame)
         medContainer.visibility = View.GONE
 
-
         //load meds from object box that belong to current user
         val res = TranscribeApplication.getUser().meds
 
