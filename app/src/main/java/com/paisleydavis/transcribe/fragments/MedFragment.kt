@@ -155,7 +155,12 @@ class MedFragment : Fragment() {
                 periodStr = "PM"
             }
             else{
-                timeStr = reminderHour.toString()
+                if(reminderHour == 0) {
+                    timeStr = "12"
+                }
+                else {
+                    timeStr = reminderHour.toString()
+                }
                 periodStr = "AM"
             }
             // add leading 0 if necessary
@@ -174,7 +179,17 @@ class MedFragment : Fragment() {
 
         switch.setOnClickListener{
             if(time.visibility == View.GONE){
-                time.visibility = View.VISIBLE
+                // if time is 0:00, need to go to edit med to add a time
+                if(time.text.contains("00:00")){
+                    val delIntent = Intent(activity, AddMedActivity::class.java)
+                    delIntent.putExtra("edit", true)
+                    delIntent.putExtra("medName", medName)
+                    delIntent.putExtra("fragTag", this.tag)
+                    startActivity(delIntent)
+                }
+                else{
+                    time.visibility = View.VISIBLE
+                }
             }
             else{
                 time. visibility = View.GONE

@@ -151,7 +151,6 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
         }
 
         deleteButton.setOnClickListener{
-            Log.d("DELETE", "clicked")
             // just need to delete from db - medContainerFragment will take care of displaying correct med fragments
             val med = medBox.query().equal(MedData_.name, currMed.name).equal(MedData_.userId, TranscribeApplication.getUser().id).build().findFirst()
             if(med != null) {

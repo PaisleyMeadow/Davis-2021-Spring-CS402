@@ -114,18 +114,26 @@ class MedContainerFragment : Fragment() {
         //create new med fragment
         createNewMedFragment(event.medName, event.medDosage, event.medUnit, event.medFrequency, event.medReminder, event.medHour, event.medMinute)
 
-        //add med to objectbox
-        val newMedData = MedData(name = event.medName,
-            dosageAmount = event.medDosage, dosageUnit = event.medUnit, frequencyDays = event.medFrequency,
-            reminderOn = event.medReminder, reminderHour = event.medHour, reminderMinute = event.medMinute)
-        // associate with user
-        newMedData.user.target = TranscribeApplication.getUser()
-        TranscribeApplication.getUser().meds.add(newMedData)
-        boxStore.boxFor(UserData::class.java).put(TranscribeApplication.getUser())
+        if(activity?.intent?.getStringExtra("tag") == null) {
+            //add med to objectbox
+            val newMedData = MedData(
+                name = event.medName,
+                dosageAmount = event.medDosage,
+                dosageUnit = event.medUnit,
+                frequencyDays = event.medFrequency,
+                reminderOn = event.medReminder,
+                reminderHour = event.medHour,
+                reminderMinute = event.medMinute
+            )
+            // associate with user
+            newMedData.user.target = TranscribeApplication.getUser()
+            TranscribeApplication.getUser().meds.add(newMedData)
+            boxStore.boxFor(UserData::class.java).put(TranscribeApplication.getUser())
 
-        boxStore.boxFor(MedData::class.java).put(newMedData)
-        val medBox: Box<MedData> = boxStore.boxFor()
-        medBox.put(newMedData)
+            boxStore.boxFor(MedData::class.java).put(newMedData)
+            val medBox: Box<MedData> = boxStore.boxFor()
+            medBox.put(newMedData)
+        }
 
         // below ia just for testing
 //        val results = boxStore.boxFor(MedData::class.java).all
