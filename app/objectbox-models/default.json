@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:802114137121849225",
-      "lastPropertyId": "8:865057158547995755",
+      "lastPropertyId": "9:7060389840446880821",
       "name": "UserData",
       "properties": [
         {
@@ -34,6 +34,11 @@
         {
           "id": "8:865057158547995755",
           "name": "password",
+          "type": 9
+        },
+        {
+          "id": "9:7060389840446880821",
+          "name": "photoPath",
           "type": 9
         }
       ],
