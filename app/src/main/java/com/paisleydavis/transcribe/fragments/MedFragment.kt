@@ -82,18 +82,8 @@ class MedFragment : Fragment() {
             val intent = Intent(activity, AddMedActivity::class.java)
             intent.putExtra("edit", true)
             intent.putExtra("medName", medName)
+            intent.putExtra("fragTag", this.tag)
             startActivity(intent)
-
-            // delete fragment and med from db
-//            parentFragmentManager.beginTransaction().remove(this).commit()
-//            val medBox = ObjectBox.boxStore.boxFor(MedData::class.java)
-//            val med = medBox.query().equal(MedData_.userId, TranscribeApplication.getUser().id).equal(MedData_.name, medName.toString())
-//                .build().find()
-//            medBox.query().equal(MedData_.userId, TranscribeApplication.getUser().id).equal(MedData_.name, medName.toString())
-//                .build().remove()
-//            // don't forget user to med relation...
-//            TranscribeApplication.getUser().meds.remove(med)
-//            TranscribeApplication.getUser().meds.applyChangesToDb()
         }
 
         // Inflate the layout for this fragment
@@ -150,7 +140,6 @@ class MedFragment : Fragment() {
                     }
                 }
             }
-
         }
     }
 

@@ -49,10 +49,12 @@ class Profile : AppCompatActivity() {
         val usernameStr = intent.getStringExtra("username")
 
         //display username in activity
-        Log.d("NAME", usernameStr.toString())
         val usernameText = findViewById<TextView>(R.id.username)
         if (usernameStr != null) {
             usernameText.text = "$usernameStr."
+        }
+        else if(TranscribeApplication.getUser().username != ""){
+            usernameText.text = TranscribeApplication.getUser().username
         }
         //arrays for day and month names
         val dayNames = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
@@ -73,7 +75,7 @@ class Profile : AppCompatActivity() {
         //place med container fragment into the profile container
         if(savedInstanceState == null){
             supportFragmentManager.beginTransaction()
-                .add(R.id.medFragmentContainer, medContainerFragment)
+                .add(R.id.medFragmentContainer, medContainerFragment, "MED_CONTAINER")
                 .commit()
         }
 
@@ -124,7 +126,20 @@ class Profile : AppCompatActivity() {
             //setOnLongClickListener needs to return a boolean to notify if "you have actually consumed the event"
             true
         }
-    } /////
+    }
+
+    // if a new intent has been sent, it means a med fragment needs to be deleted
+    override fun onNewIntent(intent: Intent){
+        super.onNewIntent(intent)
+        Log.d("NEW", "new intent")
+        val container = supportFragmentManager.findFragmentByTag("MED")
+        val frag = container?.childFragmentManager?.findFragmentByTag(intent.getStringExtra("tagFrag"))
+        if (frag != null) {
+            Log.d("NOTNULL", "good fragggg")
+            supportFragmentManager.beginTransaction().remove(frag)
+        }
+    }
+
 
     private fun launchCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)

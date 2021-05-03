@@ -1,5 +1,6 @@
 package com.paisleydavis.transcribe
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -169,6 +170,8 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
 
             if(nameText != "" && dosageText != ""){
 
+                val newIntent = Intent(this, Profile::class.java)
+
                 // if editing existing med, need to replace old fragment and change in db
                 if(isEdit){
                     val medBox = boxStore.boxFor(MedData::class.java)
@@ -188,8 +191,10 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
                             UserData_.id, TranscribeApplication.getUser().id).build().findFirst()?.meds
                             ?: TranscribeApplication.getUser().meds
 
-                    // remove old fragment
-                    supportFragmentManager
+                    // pass fragment tag to remove old fragment in MedContainerFragment
+                    newIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    newIntent.putExtra("tag", intent.extras?.get("fragTag").toString())
+                    startActivity(newIntent)
                 }
 
                 //trigger event bus observer in MedContainerFragment

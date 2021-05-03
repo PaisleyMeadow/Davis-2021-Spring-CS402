@@ -92,6 +92,14 @@ class MedContainerFragment : Fragment() {
         return viewOfLayout
     }
 
+    // on resuming activity, check to see if there has been an edit to a fragment and act accordingly
+
+    override fun onResume(){
+        super.onResume()
+        Log.d("CONTAINER", activity?.intent?.extras.toString())
+        val frag = parentFragmentManager.findFragmentByTag(activity?.intent?.extras?.get("fragTag") as String?)
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: NewMedEvent){
         //hide default med container text
@@ -117,6 +125,8 @@ class MedContainerFragment : Fragment() {
         boxStore.boxFor(MedData::class.java).put(newMedData)
         val medBox: Box<MedData> = boxStore.boxFor()
         medBox.put(newMedData)
+
+        // was just for testing
 //        val results = boxStore.boxFor(MedData::class.java).all
 //        Log.d("MEDS", results.toString())
 //        Log.d("CURRENT", TranscribeApplication.getUser().toString())
@@ -139,7 +149,7 @@ class MedContainerFragment : Fragment() {
         //will have to worry about state here eventually (probably anyways)
         //TODO: ask Michael about fragmentManager deprecation
         parentFragmentManager.beginTransaction()
-            .add(R.id.medContainerFrame, newMedFragment)
+            .add(R.id.medContainerFrame, newMedFragment, name) // with tag for identifying later
             .commitAllowingStateLoss();
             //TODO: ask Michael about the fragment/state loss issue^ (replicate by changing
             //to just ".commit()"

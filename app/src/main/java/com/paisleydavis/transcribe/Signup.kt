@@ -85,6 +85,7 @@ class Signup : AppCompatActivity() {
                                 // put into db
                                 addUser(usernameInput.text.toString(), userEmail.text.toString(), passwordInput.text.toString())
 
+                                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                                 startActivity(intent)
                             }
                         }

@@ -2,6 +2,7 @@ package com.paisleydavis.transcribe
 
 import android.app.Activity
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -54,6 +55,7 @@ class Login : AppCompatActivity() {
                     // change to profile activity
                     val intent = Intent(this, Profile::class.java)
                     intent.putExtra("username", username)
+                    intent.flags = FLAG_ACTIVITY_SINGLE_TOP
 
                     startActivity(intent)
                 }
