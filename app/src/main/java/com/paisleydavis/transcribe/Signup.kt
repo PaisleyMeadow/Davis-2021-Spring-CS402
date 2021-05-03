@@ -74,7 +74,7 @@ class Signup : AppCompatActivity() {
                                 var errorMessage = "Email is not valid."
 
                                 //spelling suggestion from API is listed in error if available
-                                if(resp.didYouMean != "") {
+                                if(resp.didYouMean != "" && resp.didYouMean != null) {
                                     errorMessage += " Did you mean " + resp.didYouMean + "?"
                                 }
                                 displayErrorMessage(errorMessage)
@@ -82,7 +82,7 @@ class Signup : AppCompatActivity() {
                             else{ //otherwise, user data is accepted and goes to Profile activity
                                 intent.putExtra("username", usernameInput.text.toString())
 
-                                // put into db
+                                // create user in db
                                 addUser(usernameInput.text.toString(), userEmail.text.toString(), passwordInput.text.toString())
 
                                 intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP

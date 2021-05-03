@@ -16,6 +16,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="permission_message">Transcribe needs permission to access your camera to change your profile photo.</string>
     <string name="permission_title">Permission to Use Camera</string>
+    <string name="gallery_permission_message">Transcribe needs permission to access your  gallery.</string>
+    <string name="gallery_permission_title">Permission to Access Gallery</string>
     <string name="community">Community</string>
     <string name="home">Home</string>
     <string name="search">Search</string>

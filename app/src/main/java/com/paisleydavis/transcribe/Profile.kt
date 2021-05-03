@@ -2,9 +2,10 @@ package com.paisleydavis.transcribe
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -34,6 +35,7 @@ class Profile : AppCompatActivity() {
     // for saving profile photo
     lateinit var currPhotoPath: String
     val REQUEST_IMAGE_CAPTURE = 1
+    val REQUEST_PHOTO_GALLERY = 0
 
     //get medication container fragment
     private val medContainerFragment = MedContainerFragment.newInstance("", "")
@@ -125,40 +127,77 @@ class Profile : AppCompatActivity() {
             }
         }
 
-        //When profile photo is tapped and held, take new profile photo and replaces current one
-        //gonna be honest, this is mostly Ziray's code, but like, how else would I do it?
+        // When profile photo is tapped and held, take new profile photo and replaces current one
+        // gonna be honest, this is mostly Ziray's code, but like, how else would I do it?
+        // photo taken is now saved in files and path is saved w/ in UserData db
         profileImage.setOnLongClickListener{
-            val cameraCheckPermission = ContextCompat.checkSelfPermission(
+            showPhotoDialog()
+            true
+        }
+    }
+
+    private fun askCameraPermission(){
+        val cameraCheckPermission = ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.CAMERA
-            )
+        )
 
-            if (cameraCheckPermission != PackageManager.PERMISSION_GRANTED){
-                if(ActivityCompat.shouldShowRequestPermissionRationale(
-                        this,
-                        Manifest.permission.CAMERA
+        if (cameraCheckPermission != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.CAMERA
                     )){
-                    val builder = AlertDialog.Builder(this)
+                val builder = AlertDialog.Builder(this)
 
-                    val message = getString(R.string.permission_message)
-                    builder.setTitle(R.string.permission_title)
-                            .setMessage(message)
-                            .setPositiveButton("OK") { _, _ ->
-                                requestPermission()
-                            }
-                    val dialog = builder.create()
-                    dialog.show()
-                }
-                else{
-                    //don't display permission request
-                    requestPermission()
-                }
+                val message = getString(R.string.permission_message)
+                builder.setTitle(R.string.permission_title)
+                        .setMessage(message)
+                        .setPositiveButton("OK") { _, _ ->
+                            requestPermission("camera")
+                        }
+                val dialog = builder.create()
+                dialog.show()
             }
             else{
-                launchCamera()
+                //don't display permission request
+                requestPermission("camera")
             }
-            //setOnLongClickListener needs to return a boolean to notify if "you have actually consumed the event"
-            true
+        }
+        else{
+            launchCamera()
+        }
+    }
+
+
+    private fun askGalleryPermission() {
+        val readExternalCheckPermission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
+        if (readExternalCheckPermission != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    )){
+                val builder = AlertDialog.Builder(this)
+
+                val message = getString(R.string.gallery_permission_message)
+                builder.setTitle(R.string.gallery_permission_title)
+                        .setMessage(message)
+                        .setPositiveButton("OK") { _, _ ->
+                            requestPermission("gallery")
+                        }
+                val dialog = builder.create()
+                dialog.show()
+            }
+            else{
+                //don't display permission request
+                requestPermission("gallery")
+            }
+        }
+        else{
+            goToGallery()
         }
     }
 
@@ -169,9 +208,13 @@ class Profile : AppCompatActivity() {
         this.intent = intent
     }
 
-
-    private fun requestPermission() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 123)
+    private fun requestPermission(type: String) {
+        if(type == "camera") {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 123)
+        }
+        else if(type == "gallery"){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 123)
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -186,14 +229,48 @@ class Profile : AppCompatActivity() {
                     launchCamera()
                 }
             }
+            else if(permission == Manifest.permission.READ_EXTERNAL_STORAGE){
+                if( grantResults[index] == PackageManager.PERMISSION_GRANTED){
+                    goToGallery()
+                }
+            }
         }
     }
 
+    // asks if user wants to choose from gallery or take new picture
+    // and calls methods to handle permissions for each choice
+    private fun showPhotoDialog() {
+        val builder = AlertDialog.Builder(this@Profile)
+        builder.apply{
+            setPositiveButton("Take Photo",
+                    DialogInterface.OnClickListener{ dialog, id ->
+                        askCameraPermission()
+                    })
+            setNegativeButton("Choose From Gallery",
+                    DialogInterface.OnClickListener{ dialog, id ->
+                        Log.d("GALLERY", "gallerryy")
+                        askGalleryPermission()
+//                        goToGallery()
+                    })
+        }
+        builder.setMessage("Change your profile photo?")
+        builder.setCancelable(true)
+
+        val alert = builder.create()
+        alert.show()
+    }
+
+    // access photo in gallery
+    private fun goToGallery(){
+        val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(pickPhoto, REQUEST_PHOTO_GALLERY)
+    }
+
+    // photo is now saved to files and path is saved in db
+    // launchCamera is called when the user taps and holds the photo and accepts the permissions
     // yeee I mostly copied Android doc code for this but ayyy it works
     private fun launchCamera() {
-
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { cameraIntent ->
-
             try{
                 val photoFile: File? = try {
                     createImageFile()
@@ -219,17 +296,60 @@ class Profile : AppCompatActivity() {
         }
     }
 
+    // creates file path for saving photo
+    // XML for this
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+                "JPEG_${timeStamp}_", /* prefix */
+                ".jpg", /* suffix */
+                storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currPhotoPath = absolutePath
+        }
+    }
+
+    // called when photo is taken and returns to activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        // if new picture was taken
         if( requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
             galleryAddPic()
             setPic()
 
             // add photo path to db
             addToDB()
+        } // if photo was chosen from gallery
+        else if(requestCode == REQUEST_PHOTO_GALLERY && resultCode == RESULT_OK){
+            val selectedImage: Uri? = data?.data
+            // set image path to be saved in db
+            if(selectedImage != null){
+                currPhotoPath = getPathFromURI(selectedImage)
+            }
+            setPic()
+            addToDB()
         }
     }
 
+    fun getPathFromURI(ContentUri: Uri?): String {
+        var res: String = ""
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor? = contentResolver
+                .query(ContentUri!!, proj, null, null, null)
+        if (cursor != null) {
+            cursor.moveToFirst()
+            res = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
+            cursor.close()
+        }
+        return res
+    }
+
+    // saves path to photo in user db
     private fun addToDB() {
         val userBox = ObjectBox.boxStore.boxFor(UserData::class.java)
         val user = TranscribeApplication.getUser()
@@ -239,59 +359,44 @@ class Profile : AppCompatActivity() {
 
     // save photo to gallery
     private fun galleryAddPic() {
-        val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-        val f = File(currPhotoPath)
-        val contentUri = Uri.fromFile(f)
-        mediaScanIntent.data = contentUri
-        this.sendBroadcast(mediaScanIntent)
+        // love how their own docs uses a deprecated method
+        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+            val f = File(currPhotoPath)
+            mediaScanIntent.data = Uri.fromFile(f)
+            sendBroadcast(mediaScanIntent)
+        }
     }
 
     // convert photo from gallery to bitmap and set as profile photo
     private fun setPic() {
-        val imageView = findViewById<ImageView>(R.id.profileImage)
+        if(currPhotoPath != "") {
+            val imageView = findViewById<ImageView>(R.id.profileImage)
 
-        // Get the dimensions of the View
-        // hardcoding 100 x 100 dimensions because returns 0 in onCreate()
-        val targetW = 100
-        val targetH = 100
+            // Get the dimensions of the View
+            // hardcoding 100 x 100 dimensions because getting height/width of ImageVIew returns 0 in onCreate()
+            val targetW = 100
+            val targetH = 100
 
-        val bmOptions = BitmapFactory.Options().apply {
-            // Get the dimensions of the bitmap
-            inJustDecodeBounds = true
+            val bmOptions = BitmapFactory.Options().apply {
+                // Get the dimensions of the bitmap
+                inJustDecodeBounds = true
 
-            BitmapFactory.decodeFile(currPhotoPath, this)
+                BitmapFactory.decodeFile(currPhotoPath, this)
 
-            val photoW: Int = outWidth
-            val photoH: Int = outHeight
+                val photoW: Int = outWidth
+                val photoH: Int = outHeight
 
-            // Determine how much to scale down the image
-            val scaleFactor: Int =
-                1.coerceAtLeast((photoW / targetW).coerceAtMost(photoH / targetH))
+                // Determine how much to scale down the image
+                val scaleFactor: Int =
+                        1.coerceAtLeast((photoW / targetW).coerceAtMost(photoH / targetH))
 
-            // Decode the image file into a Bitmap sized to fill the View
-            inJustDecodeBounds = false
-            inSampleSize = scaleFactor
-        }
-        BitmapFactory.decodeFile(currPhotoPath, bmOptions)?.also { bitmap ->
-            imageView.setImageBitmap(bitmap)
-        }
-    }
-
-
-
-    // creating file path for saving photo
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currPhotoPath = absolutePath
+                // Decode the image file into a Bitmap sized to fill the View
+                inJustDecodeBounds = false
+                inSampleSize = scaleFactor
+            }
+            BitmapFactory.decodeFile(currPhotoPath, bmOptions)?.also { bitmap ->
+                imageView.setImageBitmap(bitmap)
+            }
         }
     }
 }
