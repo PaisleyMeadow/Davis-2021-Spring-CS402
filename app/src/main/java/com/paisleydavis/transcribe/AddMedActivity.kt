@@ -34,6 +34,7 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
         setContentView(R.layout.activity_add_med)
 
         var currMed = MedData()
+        val medBox = boxStore.boxFor(MedData::class.java)
 
         // if editing med, get data from db and fill in sections accordingly
         if(intent.extras?.containsKey("edit") == true){
@@ -143,6 +144,30 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
             }
         }
 
+        // show delete button if editing
+        val deleteButton = findViewById<Button>(R.id.deleteMedButton)
+        if(!isEdit){
+            deleteButton.visibility = View.GONE
+        }
+
+        deleteButton.setOnClickListener{
+            Log.d("DELETE", "clicked")
+            // just need to delete from db - medContainerFragment will take care of displaying correct med fragments
+            val med = medBox.query().equal(MedData_.name, currMed.name).equal(MedData_.userId, TranscribeApplication.getUser().id).build().findFirst()
+            if(med != null) {
+                medBox.remove(med)
+            }
+
+            // then return to profile
+            val newIntent = Intent(this, Profile::class.java)
+            newIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            newIntent.putExtra("tag", intent.extras?.get("fragTag").toString())
+            startActivity(newIntent)
+
+            finish()
+        }
+
+
 
         // On add button, triggers event bus listener
         val addButton = findViewById<Button>(R.id.addNewMedButton)
@@ -174,8 +199,7 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
 
                 // if editing existing med, need to replace old fragment and change in db
                 if(isEdit){
-                    val medBox = boxStore.boxFor(MedData::class.java)
-                    var oldMed = medBox.query().equal(MedData_.name, nameText).equal(MedData_.userId, TranscribeApplication.getUser().id).build().findFirst()
+                    var oldMed = medBox.query().equal(MedData_.name, currMed.name).equal(MedData_.userId, TranscribeApplication.getUser().id).build().findFirst()
                     oldMed?.name = nameText
                     oldMed?.dosageAmount = dosageText.toLong()
                     oldMed?.dosageUnit = dosageUnit.toString()
@@ -194,13 +218,14 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
                     // pass fragment tag to remove old fragment in MedContainerFragment
                     newIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                     newIntent.putExtra("tag", intent.extras?.get("fragTag").toString())
+
                     startActivity(newIntent)
                 }
-
-                //trigger event bus observer in MedContainerFragment
-                EventBus.getDefault().post(NewMedEvent(nameText, dosageText.toLong(), dosageUnit as String, selectedDays.toString(), reminderSwitch.isChecked, reminderHour, reminderMinute))
-
-                //finish this activity
+                else{
+                    //trigger event bus observer in MedContainerFragment to create new fragment (only if adding brand new med)
+                    EventBus.getDefault().post(NewMedEvent(nameText, dosageText.toLong(), dosageUnit as String, selectedDays.toString(), reminderSwitch.isChecked, reminderHour, reminderMinute))
+                }
+                // finish activity irregardless of edit
                 finish()
             }
             else{

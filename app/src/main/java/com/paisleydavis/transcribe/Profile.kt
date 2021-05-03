@@ -129,15 +129,13 @@ class Profile : AppCompatActivity() {
     }
 
     // if a new intent has been sent, it means a med fragment needs to be deleted
+    // so we save the new intent so it can be accessed in MedContainerFragment
     override fun onNewIntent(intent: Intent){
         super.onNewIntent(intent)
-        Log.d("NEW", "new intent")
-        val container = supportFragmentManager.findFragmentByTag("MED")
-        val frag = container?.childFragmentManager?.findFragmentByTag(intent.getStringExtra("tagFrag"))
-        if (frag != null) {
-            Log.d("NOTNULL", "good fragggg")
-            supportFragmentManager.beginTransaction().remove(frag)
-        }
+        this.intent = intent
+        Log.d("NEWINTENT", intent.getStringExtra("fragTag").toString())
+        val frag = supportFragmentManager.findFragmentByTag(intent.getStringExtra("fragTag"))
+
     }
 
 

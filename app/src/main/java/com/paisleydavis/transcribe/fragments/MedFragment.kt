@@ -107,7 +107,7 @@ class MedFragment : Fragment() {
 
         }
 
-        if (dayList != null) {
+        if (dayList != null && dayList.size != 1) {
             for(chosenDay in dayList){
                 when(chosenDay.substring(0, 2)){
                     "Su" -> {

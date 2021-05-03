@@ -37,9 +37,6 @@ class MedContainerFragment : Fragment() {
     private var param2: String? = null
     private lateinit var viewOfLayout: View
 
-//    private val medFragment = MedFragment.newInstance("Lexapro", "10mg")
-//    private val medFragment2 = MedFragment.newInstance("Somethingoxyn", "100mg")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -92,12 +89,16 @@ class MedContainerFragment : Fragment() {
         return viewOfLayout
     }
 
-    // on resuming activity, check to see if there has been an edit to a fragment and act accordingly
-
+    // on resuming activity, if a med has been edited, need to delete old fragment for med
     override fun onResume(){
         super.onResume()
-        Log.d("CONTAINER", activity?.intent?.extras.toString())
-        val frag = parentFragmentManager.findFragmentByTag(activity?.intent?.extras?.get("fragTag") as String?)
+        val tag = activity?.intent?.getStringExtra("tag")
+        if(tag != null) {
+            val frag = childFragmentManager.findFragmentByTag(activity?.intent?.extras?.get("tag") as String?)
+            if (frag != null) {
+                childFragmentManager.beginTransaction().remove(frag).commit()
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -126,7 +127,7 @@ class MedContainerFragment : Fragment() {
         val medBox: Box<MedData> = boxStore.boxFor()
         medBox.put(newMedData)
 
-        // was just for testing
+        // below ia just for testing
 //        val results = boxStore.boxFor(MedData::class.java).all
 //        Log.d("MEDS", results.toString())
 //        Log.d("CURRENT", TranscribeApplication.getUser().toString())
@@ -146,14 +147,9 @@ class MedContainerFragment : Fragment() {
     private fun createNewMedFragment(name: String, dosage: Long, unit: String, freq: String, reminder: Boolean, hour: Int, minute: Int) {
         val newMedFragment = MedFragment.newInstance(name, dosage, unit, freq, reminder, hour, minute)
 
-        //will have to worry about state here eventually (probably anyways)
-        //TODO: ask Michael about fragmentManager deprecation
-        parentFragmentManager.beginTransaction()
-            .add(R.id.medContainerFrame, newMedFragment, name) // with tag for identifying later
-            .commitAllowingStateLoss();
-            //TODO: ask Michael about the fragment/state loss issue^ (replicate by changing
-            //to just ".commit()"
-            //is commitAllowingStateLoss() bad? Maybe. Did it fix my problem? Yes.
+        childFragmentManager.beginTransaction()
+                .add(R.id.medContainerFrame, newMedFragment, name)
+                .commitAllowingStateLoss()
 
     }
 
@@ -179,7 +175,7 @@ class MedContainerFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-//        //temp delete meds
+       //temp delete meds
 //        ObjectBox.boxStore.close()
 //        ObjectBox.boxStore.deleteAllFiles()
     }
