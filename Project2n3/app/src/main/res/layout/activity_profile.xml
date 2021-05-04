@@ -103,14 +103,14 @@
 
                 <ImageView
                     android:id="@+id/profileImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="111dp"
+                    android:layout_height="96dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.877"
+                    app:layout_constraintHorizontal_bias="0.652"
                     app:layout_constraintStart_toEndOf="@+id/username"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
+                    app:layout_constraintVertical_bias="0.254"
                     app:srcCompat="@drawable/default_image" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

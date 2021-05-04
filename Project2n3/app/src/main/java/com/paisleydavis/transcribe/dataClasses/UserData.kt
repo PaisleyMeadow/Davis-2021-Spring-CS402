@@ -15,8 +15,7 @@ data class UserData (
     var username:String = "",
     var email:String = "",
     var password:String,
-    var theme:String = "default",
-    var photoPath: String = ""
+    var theme:String = "default"
 ){
     @Backlink(to = "user")
     lateinit var meds: ToMany<MedData> // store all meds uploaded by user

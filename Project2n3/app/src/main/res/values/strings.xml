@@ -16,28 +16,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="permission_message">Transcribe needs permission to access your camera to change your profile photo.</string>
     <string name="permission_title">Permission to Use Camera</string>
-    <string name="gallery_permission_message">Transcribe needs permission to access your  gallery.</string>
-    <string name="gallery_permission_title">Permission to Access Gallery</string>
     <string name="community">Community</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="medications_and_supplements"><![CDATA[Medications & Supplements]]></string>
     <string name="contribute_survey">Contribute</string>
-
-<!--    values for community topics recycler view-->
-    <string-array name="topics_array">
-        <item>Testosterone</item>
-        <item>Estrogen</item>
-        <item>Spironolactone</item>
-        <item>Progesterone</item>
-        <item>Cyproterone Acetate</item>
-        <item>Leuprolide Acetate</item>
-        <item>Histrelin</item>
-        <item>Orchiectomy</item>
-        <item>Double Incision Top Surgery</item>
-        <item>Periareolar Top Surgery</item>
-        <item>Keyhole Top Surgery</item>
-        <item>Metoidioplasty</item>
-        <item>Breast Augmentation</item>
-    </string-array>
 </resources>
