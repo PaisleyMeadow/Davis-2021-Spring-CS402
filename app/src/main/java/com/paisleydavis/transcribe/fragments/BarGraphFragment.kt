@@ -49,6 +49,7 @@ open class BarGraphFragment : Fragment() {
             .dataLabelsEnabled(true)
             .xAxisLabelsEnabled(true)
             .yAxisTitle("Users")
+            .animationDuration(0)
             .categories(arrayOf("Weight Loss", "Increased Appetite", "Extreme Mood Swings"))
                 // categories are x-axis labels
             .series(arrayOf(

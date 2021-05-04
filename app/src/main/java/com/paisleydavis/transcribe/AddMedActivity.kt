@@ -1,5 +1,6 @@
 package com.paisleydavis.transcribe
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -9,8 +10,12 @@ import android.util.Log
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.view.iterator
-import com.paisleydavis.transcribe.dataClasses.NewMedEvent
+import com.paisleydavis.transcribe.ObjectBox.boxStore
+import com.paisleydavis.transcribe.dataClasses.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import org.w3c.dom.Text
 import java.util.*
 
 /**
@@ -20,15 +25,37 @@ import java.util.*
  */
 class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
 
-    lateinit var adapter : ArrayAdapter<CharSequence>
+    private lateinit var adapter : ArrayAdapter<CharSequence>
+    var isEdit : Boolean = false
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_med)
 
+        var currMed = MedData()
+        val medBox = boxStore.boxFor(MedData::class.java)
+
+        // if editing med, get data from db and fill in sections accordingly
+        if(intent.extras?.containsKey("edit") == true){
+            isEdit = true
+            val user =
+                boxStore.boxFor(UserData::class.java).get(TranscribeApplication.getUser().id)
+            val meds = user.meds
+            for(med in meds){
+                if(intent.extras?.get("medName") == med.name){
+                    currMed = med
+                }
+            }
+        }
+
         val nameTextView = findViewById<TextView>(R.id.addMedName)
         val dosageTextView = findViewById<TextView>(R.id.addMedDosage)
+
+        if(isEdit){
+            nameTextView.text = currMed.name
+            dosageTextView.text = currMed.dosageAmount.toString()
+        }
 
         //populate units in spinner
         val unitSpinner = findViewById<Spinner>(R.id.units_spinner)
@@ -43,6 +70,11 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
             unitSpinner.adapter = adapter
         }
         unitSpinner.onItemSelectedListener = this
+
+        if(isEdit){
+            val pos = adapter.getPosition(currMed.dosageUnit)
+            unitSpinner.setSelection(pos)
+        }
 
         // initialize time picker and hide it
         var timePicker = findViewById<TimePicker>(R.id.medTimePicker)
@@ -59,13 +91,21 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
             }
         }
 
+        if(isEdit){
+            timePicker.hour = currMed.reminderHour
+            timePicker.minute = currMed.reminderMinute
+            reminderSwitch.isChecked = true
+        }
+
         // create an array of all checkboxes so they can be checked later
+        // top row of checkboxes
         val checkboxes: ArrayList<CheckBox> = ArrayList()
         val checkLayoutTop = findViewById<LinearLayout>(R.id.checkLayoutTop)
         for(c in checkLayoutTop){
             val box: CheckBox = c as CheckBox
             checkboxes.add(box)
         }
+        // bottom row of checkboxes
         val checkLayoutBottom = findViewById<LinearLayout>(R.id.checkLayoutBottom)
         for(c in checkLayoutBottom){
             val box: CheckBox = c as CheckBox
@@ -90,6 +130,44 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
                 }
             }
         }
+
+        if(isEdit){
+            if(currMed.frequencyDays.contains("Every")){
+                everydayCheck.performClick()
+            }
+            else{
+                for(box in checkboxes){
+                    if(currMed.frequencyDays.contains(box.text.toString())){
+                        box.isChecked = true
+                    }
+                }
+            }
+        }
+
+        // show delete button if editing
+        val deleteButton = findViewById<Button>(R.id.deleteMedButton)
+        if(!isEdit){
+            deleteButton.visibility = View.GONE
+        }
+
+        deleteButton.setOnClickListener{
+            // just need to delete from db - medContainerFragment will take care of displaying correct med fragments
+            val med = medBox.query().equal(MedData_.name, currMed.name).equal(MedData_.userId, TranscribeApplication.getUser().id).build().findFirst()
+            if(med != null) {
+                medBox.remove(med)
+            }
+            // reset app's user data
+            TranscribeApplication.setUser(TranscribeApplication.getUser())
+
+            // then return to profile
+            val newIntent = Intent(this, Profile::class.java)
+            newIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            newIntent.putExtra("tag", intent.extras?.get("fragTag").toString())
+            startActivity(newIntent)
+
+            finish()
+        }
+
 
 
         // On add button, triggers event bus listener
@@ -117,10 +195,38 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
             }
 
             if(nameText != "" && dosageText != ""){
-                //trigger event bus observer in MedContainerFragment
-                EventBus.getDefault().post(NewMedEvent(nameText, dosageText.toLong(), dosageUnit as String, selectedDays.toString(), reminderSwitch.isChecked, reminderHour, reminderMinute))
 
-                //finish this activity
+                val newIntent = Intent(this, Profile::class.java)
+
+                // if editing existing med, need to replace old fragment and change in db
+                if(isEdit){
+                    var oldMed = medBox.query().equal(MedData_.name, currMed.name).equal(MedData_.userId, TranscribeApplication.getUser().id).build().findFirst()
+                    oldMed?.name = nameText
+                    oldMed?.dosageAmount = dosageText.toLong()
+                    oldMed?.dosageUnit = dosageUnit.toString()
+                    oldMed?.frequencyDays = selectedDays.toString()
+                    oldMed?.reminderOn = reminderSwitch.isChecked
+                    oldMed?.reminderHour = reminderHour
+                    oldMed?.reminderMinute = reminderMinute
+
+                    // add back into box to update
+                    medBox.put(oldMed)
+                    TranscribeApplication.getUser().meds =
+                        boxStore.boxFor(UserData::class.java).query().equal(
+                            UserData_.id, TranscribeApplication.getUser().id).build().findFirst()?.meds
+                            ?: TranscribeApplication.getUser().meds
+
+                    // pass fragment tag to remove old fragment in MedContainerFragment
+                    newIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    newIntent.putExtra("tag", intent.extras?.get("fragTag").toString())
+
+                    startActivity(newIntent)
+                }
+                else{
+                    //trigger event bus observer in MedContainerFragment to create new fragment (only if adding brand new med)
+                    EventBus.getDefault().post(NewMedEvent(nameText, dosageText.toLong(), dosageUnit as String, selectedDays.toString(), reminderSwitch.isChecked, reminderHour, reminderMinute))
+                }
+                // finish activity irregardless of edit
                 finish()
             }
             else{
@@ -148,10 +254,7 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
 
     // extending interface for unit spinner
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-        Log.d("UNIT", id.toString())
-        Log.d("OPTION", adapter.getItem(id.toInt()).toString())
-
+        // not necessary to implement at the moment
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {
        // not necessary to implement at the moment

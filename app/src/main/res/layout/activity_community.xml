@@ -34,11 +34,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
+    <SearchView
         android:id="@+id/community_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:background="@color/pale_green"
         android:ems="10"
         android:hint="@string/search"

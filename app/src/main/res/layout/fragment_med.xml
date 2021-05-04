@@ -69,7 +69,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/edit_med"
             android:layout_width="46dp"
             android:layout_height="39dp"
             android:layout_marginEnd="16dp"
@@ -100,7 +100,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/ic_circle"
+                android:background="@drawable/ic_circle_light"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="M"
                 android:textSize="8sp" />
@@ -113,7 +113,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/ic_circle"
+                android:background="@drawable/ic_circle_light"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="T"
                 android:textSize="8sp" />
@@ -126,7 +126,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/ic_circle"
+                android:background="@drawable/ic_circle_light"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="W"
                 android:textSize="8sp" />
@@ -139,7 +139,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/ic_circle"
+                android:background="@drawable/ic_circle_light"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Th"
                 android:textSize="8sp" />
@@ -152,7 +152,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/ic_circle"
+                android:background="@drawable/ic_circle_light"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="F"
                 android:textSize="8sp" />
@@ -165,7 +165,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/ic_circle"
+                android:background="@drawable/ic_circle_light"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="S"
                 android:textSize="8sp" />
@@ -178,7 +178,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@drawable/ic_circle"
+                android:background="@drawable/ic_circle_light"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Su"
                 android:textSize="8sp" />
@@ -189,8 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:text="0:00 am"
+            android:text="00:00 am"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/weekdayContainer"
