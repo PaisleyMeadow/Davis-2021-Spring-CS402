@@ -76,7 +76,7 @@ class MedFragment : Fragment() {
         val bubbles = container.children
         for(b in bubbles){
             Log.d("CHILD", b.toString())
-            b.background = ""
+//            b.background = ""
         }
     }
 

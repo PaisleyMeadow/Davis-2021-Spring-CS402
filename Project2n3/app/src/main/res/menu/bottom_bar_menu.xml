@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--TODO: implement item color change on selection-->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home_icon"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="@string/home"/>
+    <item
+        android:id="@+id/community_icon"
+        android:enabled="true"
+        android:icon="@drawable/people"
+        android:title="@string/community"/>
+</menu>

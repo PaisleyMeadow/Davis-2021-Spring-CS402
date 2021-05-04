@@ -1,0 +1,195 @@
+package com.paisleydavis.transcribe.fragments
+
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.paisleydavis.transcribe.*
+import com.paisleydavis.transcribe.ObjectBox.boxStore
+import com.paisleydavis.transcribe.dataClasses.MedData
+import com.paisleydavis.transcribe.dataClasses.NewMedEvent
+import com.paisleydavis.transcribe.dataClasses.UserData
+import io.objectbox.kotlin.boxFor
+import io.objectbox.Box
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "medName"
+private const val ARG_PARAM2 = "medDosage"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [MedContainerFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class MedContainerFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+    private lateinit var viewOfLayout: View
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+
+        //register eventbus for observing adding new medications
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+
+        viewOfLayout = inflater.inflate(R.layout.fragment_med_container, container, false)
+
+        //hide meds
+        val medContainer = viewOfLayout.findViewById<LinearLayout>(R.id.medContainerFrame)
+        medContainer.visibility = View.GONE
+
+        //load meds from object box that belong to current user
+        loadMeds()
+
+        val addButton = viewOfLayout.findViewById<ImageView>(R.id.addMedButton)
+        addButton.setOnClickListener{goToAddMed()}
+
+        val expandButton = viewOfLayout.findViewById<ImageButton>(R.id.expand_med)
+        expandButton.setOnClickListener{
+            if(medContainer.visibility == View.GONE){
+                medContainer.visibility = View.VISIBLE
+                expandButton.setBackgroundResource(R.drawable.ic_expand_more)
+            }
+            else{
+                medContainer.visibility = View.GONE
+                expandButton.setBackgroundResource(R.drawable.ic_expand_less)
+            }
+        }
+
+        // Inflate the layout for this fragment
+        return viewOfLayout
+    }
+
+    private fun loadMeds() {
+        val res = TranscribeApplication.getUser().meds
+
+        if(res.isNotEmpty()){
+            val emptyText = viewOfLayout.findViewById<TextView>(R.id.emptyMedText)
+            emptyText.visibility = View.GONE
+
+            for(med in res){
+                createNewMedFragment(med.name, med.dosageAmount, med.dosageUnit, med.frequencyDays, med.reminderOn, med.reminderHour, med.reminderMinute)
+            }
+        }
+    }
+
+    // on resuming activity, if a med has been edited, need to remove old fragments and reload
+    override fun onResume(){
+        super.onResume()
+        val tag = activity?.intent?.getStringExtra("tag")
+        if(tag != null) {
+            for(frag in childFragmentManager.fragments){
+                childFragmentManager.beginTransaction().remove(frag).commit()
+            }
+            loadMeds()
+//            val frag = childFragmentManager.findFragmentByTag(activity?.intent?.extras?.get("tag") as String?)
+//            if (frag != null) {
+//                childFragmentManager.beginTransaction().remove(frag).commit()
+//            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: NewMedEvent){
+        //hide default med container text
+        val emptyMedText = viewOfLayout.findViewById<TextView>(R.id.emptyMedText)
+        emptyMedText.visibility = View.GONE
+
+        //show meds in dropdown so user will see new med added when add med returns
+        val dropdown = viewOfLayout.findViewById<ImageButton>(R.id.expand_med)
+        dropdown.performClick()
+
+        //create new med fragment
+        createNewMedFragment(event.medName, event.medDosage, event.medUnit, event.medFrequency, event.medReminder, event.medHour, event.medMinute)
+
+        if(activity?.intent?.getStringExtra("tag") == null) {
+            //add med to objectbox
+            val newMedData = MedData(
+                name = event.medName,
+                dosageAmount = event.medDosage,
+                dosageUnit = event.medUnit,
+                frequencyDays = event.medFrequency,
+                reminderOn = event.medReminder,
+                reminderHour = event.medHour,
+                reminderMinute = event.medMinute
+            )
+            // associate with user
+            newMedData.user.target = TranscribeApplication.getUser()
+            TranscribeApplication.getUser().meds.add(newMedData)
+            boxStore.boxFor(UserData::class.java).put(TranscribeApplication.getUser())
+
+            boxStore.boxFor(MedData::class.java).put(newMedData)
+            val medBox: Box<MedData> = boxStore.boxFor()
+            medBox.put(newMedData)
+        }
+    }
+
+    /**
+     * Go to add med activity, from profile by tapping medications + button
+     */
+    private fun goToAddMed(){
+        val dropdown = viewOfLayout.findViewById<ImageButton>(R.id.expand_med)
+        dropdown.performClick() // always close drop down
+
+        val intent = Intent(activity, AddMedActivity::class.java)
+        startActivity(intent)
+    }
+
+    /**
+     * Create new medication fragment
+     */
+    private fun createNewMedFragment(name: String, dosage: Long, unit: String, freq: String, reminder: Boolean, hour: Int, minute: Int) {
+        val newMedFragment = MedFragment.newInstance(name, dosage, unit, freq, reminder, hour, minute)
+
+        childFragmentManager.beginTransaction()
+                .add(R.id.medContainerFrame, newMedFragment, name)
+                .commitAllowingStateLoss()
+
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment MedContainerFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+                MedContainerFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_PARAM1, param1)
+                        putString(ARG_PARAM2, param2)
+                    }
+                }
+    }
+
+    override fun onStop() {
+        super.onStop()
+       //temp delete meds
+//        ObjectBox.boxStore.close()
+//        ObjectBox.boxStore.deleteAllFiles()
+    }
+}

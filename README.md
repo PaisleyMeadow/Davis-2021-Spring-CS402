@@ -21,7 +21,7 @@ It has two main functions - an individual profile, where a user can store and tr
 There is also a Transcribe community. Here users will be able to view details about common transgender and non-binary medical topics that have been added by other users.  The goal is to build off of the existing tradition among queer and trans people of community-based knowledge by making that knowledge more accessible and far-reaching. Everything is completely anonymous, and users can choose whether or not to contribute their own experiences. 
 
 ### Screenshots:
-![](../../Pictures/transcribe_3_screenshots.png)
+![](C:\Users\paisley\Documents\Davis-2021-Spring-CS402\Project2n3\documentation\image20.png)
 
 ### Keywords:
 ```medical, health, tracker, symptoms, medication, mood, transgender, gender, LGBT, gay, queer, non-binary,```
