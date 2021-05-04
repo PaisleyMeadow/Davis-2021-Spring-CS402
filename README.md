@@ -7,6 +7,8 @@ This is the final version of an Android app built for CS 402 at Boise State Univ
 **A health app built with you in mind.** 
 Navigating your health, safety, and well-being can be difficult when you exist outside the realm of socially expected gender, with medical environments becoming stressful and alienating if you don't fit into your assigned-at-birth box. **Transcribe** aims to fit your expectations and needs, instead of the other way around, helping you to track and monitor important mental and physical health information, while also fostering community knowledge to help you feel more prepared and less alone.  
 
+![](documentation/start.jpg)  	![](documentation/profile.jpg)    ![](documentation/community.jpg)
+
 ## Start Activity
 The start activity of Transcribe allows users to create a new account or login using existing credentials. Currently, user account data is only being saved locally using [ObjectBox](https://objectbox.io/) (a NoSQL database). As user information is not secure, the app is not currently appropriate for real-life use. 
 
@@ -16,28 +18,31 @@ When a new account is created, the provided email is validated using the [mailbo
 
 ## Profile
 Currently, the only feature available on the user profile is adding/editing/deleting medications/supplements. A user can do this by selecting the "add pill bottle" icon, which will take them to a separate activity to add a new item. After an item is added, the user can edit it by selecting the round edit button on the right-hand side of the item's entry under "Medications & Supplements"
-This process utilizes the publisher/subscriber pattern using the [EventBus](https://greenrobot.org/eventbus/) library. 
-Items are also saved to an ObjectBox database and are persistent across log-ins - that is, a user can exit and return, and there medications will be saved under their account. 
+This process utilizes the publisher/subscriber pattern using the [EventBus](https://greenrobot.org/eventbus/) library.   
+Items are also saved to an ObjectBox database and are persistent across log-ins - that is, a user can exit and return, and view their saved medications.  
 
-GIF HERE
+![](documentation/medications.gif)
 
-The default profile picture (light purple smiley face) can also be replaced by a user-chosen photo, either through taking a new picture or choosing from the gallery. New photos taken will be saved to the device, and the chosen picture's path will be saved and appear the next time a user logs in.
+The default profile picture (light purple smiley face) can also be replaced by a user-chosen photo, either through taking a new picture or choosing from the gallery. New photos taken will be saved to the device, and the chosen picture's path will be saved and appear the next time a user logs in.  
 
-GIF HERE
+![](documentation//picture_example.gif)  
+*Note: Linux has a hard time supporting the emulator's Virtual Scene, so the house will have to do.*
 
 ## Community
-Here, I have implemented a RecyclerView to later display the available topics in the Community section. Right now, they are just being labelled as per the example dummy repository. However, tapping the plus button on each topic will open up a (right now, filler) data graph. This graph is generated using [AAChartCore](https://github.com/AAChartModel/AAChartCore), a pretty powerful yet simple library that takes away a lot of the pain that other graph libraries I was trying to use caused. 
+The menu bar at the bottom of the screen is used to navigate from the user profile to the community section. 
+The Community activity consists of a RecyclerView list of trans/NB medical topics that are searchable using the top search bar. 
+Each topic's plus button can be tapped to reveal more content. Currently, the graph under each topic is only initialized using dummy data, so it's the same for each topic.   
+Graphs are generated using [AAChartCore](https://github.com/AAChartModel/AAChartCore), a pretty powerful yet simple library that takes away a lot of the pain that other graph libraries I was trying to use gave me.   
+There is a display issue that causes the graph to not always load or load after you've scrolled away. I believe this is partially caused by the default animation of AAChartModel charts and there doesn't seem to be a way to turn it off...maybe that library isn't completely pain-free.
 
-There is a display issue that causes the graph to not always load or load after you've scrolled away. I think this is caused how the RecyclerView decides to load or not load elements.  
+![](documentation/search_example.gif)
 
-## Contribute
-By tapping on the "Contribute" button on each Community item, you are taken to a survey that is implemented using [SurveyKit](https://github.com/quickbirdstudios/SurveyKit). Once the survey is complete, the survey data collected is currently stored in the local database. A relation exists between this data and the user who contributed it, which will later be used to show the user what they have contributed to and to prevent duplicate entries.   
-Later, this data will be what is used to create the graphs under each topic. 
+Under each topic, there is an option to "contribute" to the community. This takes the user to a survey created with [SurveyKit](https://github.com/quickbirdstudios/SurveyKit). Using this library allows you to create a custom survey (down to every question and type of input received); the plan was to create JSON structures for each topic in the community that specified the questions and format for that topic (since each one is so unique in terms of experiences, etc.). However, that was a lot of data compiling and structuring that I was not able to do.   
+So currently, the "Contribute" button takes you to the same, default survey for each topic. 
+ 
+![](documentation/survey_example.gif)
 
 ## Other Info
 
-Video demo can be viewed [here.](https://drive.google.com/file/d/1n6UoygpFSYBAmYKhXFWuMNAWRxUAU_tJ/view?usp=sharing)
-A **signed app bundle** is available in the `export` folder..   
+A **signed app bundle** is available in the `export` folder.   
 The **Play Store Icon** is available in the ``marketing` folder as `ic_launcher-playstore.png`. 
-
-I got blindsided by a bunch of responsibilities these past weeks, so this submission is a little more lackluster than I wanted it to be, but c'est la vie!
