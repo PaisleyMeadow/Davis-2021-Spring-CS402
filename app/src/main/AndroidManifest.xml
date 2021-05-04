@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.paisleydavis.transcribe">
+    package="com.paisleydavis.transcribe" xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,15 +26,10 @@
         </provider>
 
 
-        <activity android:name=".Contribute"></activity>
+        <activity android:name=".Contribute" />
         <activity
             android:name=".Community"
             android:windowSoftInputMode="adjustPan">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".AddMedActivity"
@@ -43,12 +38,6 @@
         <activity android:name=".Signup" />
         <activity android:name=".Login" />
         <activity android:name=".Profile">
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
-
-
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
         </activity>
         <activity android:name=".MainActivity">
              <intent-filter>

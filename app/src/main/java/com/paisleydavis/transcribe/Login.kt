@@ -56,8 +56,11 @@ class Login : AppCompatActivity() {
                     val intent = Intent(this, Profile::class.java)
                     intent.putExtra("username", username)
                     intent.flags = FLAG_ACTIVITY_SINGLE_TOP
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // this,
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); // and this flag so the main and login/signup activity will be killed
 
                     startActivity(intent)
+                    finish()
                 }
                 else{
                     displayErrorMessage("User not found.")

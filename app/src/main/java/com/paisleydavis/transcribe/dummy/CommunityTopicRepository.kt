@@ -1,7 +1,9 @@
 package com.paisleydavis.transcribe.dummy
 
+import com.paisleydavis.transcribe.R
 import java.util.ArrayList
 import java.util.HashMap
+import com.paisleydavis.transcribe.dataClasses.MyObjectBox
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -12,7 +14,7 @@ import java.util.HashMap
 object CommunityTopicRepository {
 
     /**
-     * An array of sample (dummy) items.
+     * An array of items
      */
     val ITEMS: MutableList<TopicItem> = ArrayList()
 
@@ -21,10 +23,13 @@ object CommunityTopicRepository {
      */
     val ITEM_MAP: MutableMap<String, TopicItem> = HashMap()
 
-    private val COUNT = 25
+    private const val COUNT = 25
+
+    // get items from resource array
+//    private val topics = this.resources.getStringArray(R.array.topics_array)
 
     init {
-        // Add some sample items.
+        // Add items
         for (i in 1..COUNT) {
             addItem(createDummyItem(i))
         }
@@ -51,7 +56,11 @@ object CommunityTopicRepository {
     /**
      * A dummy item representing a piece of content.
      */
-    data class TopicItem(val id: String, val content: String, val details: String) {
+    data class TopicItem(
+            val id: String,
+            val content: String,
+            val details: String
+    ) {
         override fun toString(): String = content
     }
 }

@@ -86,7 +86,10 @@ class Signup : AppCompatActivity() {
                                 addUser(usernameInput.text.toString(), userEmail.text.toString(), passwordInput.text.toString())
 
                                 intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // this,
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); // and this flag so the main and login/signup activity will be killed
                                 startActivity(intent)
+                                finish()
                             }
                         }
                     }
