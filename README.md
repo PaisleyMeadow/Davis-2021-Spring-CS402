@@ -1,51 +1,29 @@
 # Transcribe
-## Projects 2&3 - Davis-2021-Sprint-CS402
+## Final Project  
+This is the final version of an Android app built for CS 402 at Boise State University.    
+[Link to video presentation](https://drive.google.com/file/d/1_gFsn7BV8SeYTk9jrU_eBczIX9YM0bg4/view?usp=sharing)
 
-### Full App Title: Transcribe - a Free Gender-Diverse Health Tracker & Community 
-
-
-### Pitch:
+### App Store Description:
 **A health app built with you in mind.** 
 Navigating your health, safety, and well-being can be difficult when you exist outside the realm of socially expected gender, with medical environments becoming stressful and alienating if you don't fit into your assigned-at-birth box. **Transcribe** aims to fit your expectations and needs, instead of the other way around, helping you to track and monitor important mental and physical health information, while also fostering community knowledge to help you feel more prepared and less alone.  
 
-### Description:
-
-Transcribe is a health and wellness app built for transgender and non-binary individuals.   
-It has two main functions - an individual profile, where a user can store and track data about many different health factors, including:  
-
-* Medication reminders  
-* Pharmacy information   
-* Body measurements
-* And more!     
-
-There is also a Transcribe community. Here users will be able to view details about common transgender and non-binary medical topics that have been added by other users.  The goal is to build off of the existing tradition among queer and trans people of community-based knowledge by making that knowledge more accessible and far-reaching. Everything is completely anonymous, and users can choose whether or not to contribute their own experiences. 
-
-### Screenshots:
-![](C:\Users\paisley\Documents\Davis-2021-Spring-CS402\Project2n3\documentation\image20.png)
-
-### Keywords:
-```medical, health, tracker, symptoms, medication, mood, transgender, gender, LGBT, gay, queer, non-binary,```
-``` surgery, HRT, hormones, mindful, depression, anxiety, doctor, reminders```
-
-### Category: Health and Fitness:
-
-# Developer Information:
-
 ## Start Activity
-Now, when a user signs up, a user entry is saved in the (right now, just local) database using ObjectBox. And when a user is logging in, their credentials much match that of an already-existing user. 
-When signing up, the provided  email is still being validated using the [mailboxlayer API](https://mailboxlayer.com/). 
+The start activity of Transcribe allows users to create a new account or login using existing credentials. Currently, user account data is only being saved locally using [ObjectBox](https://objectbox.io/) (a NoSQL database). As user information is not secure, the app is not currently appropriate for real-life use. 
 
+When a new account is created, the provided email is validated using the [mailboxlayer API](https://mailboxlayer.com/). It provides a "validity score" based on an SMTP check and MX-Records. Emails with a low score will not be accepted for account creation. 
+
+![Gif of signing-up process with email validation](documentation/signing_up.gif)
 
 ## Profile
-While the UI does not look much different than before, I've now implemented:  
+Currently, the only feature available on the user profile is adding/editing/deleting medications/supplements. A user can do this by selecting the "add pill bottle" icon, which will take them to a separate activity to add a new item. After an item is added, the user can edit it by selecting the round edit button on the right-hand side of the item's entry under "Medications & Supplements"
+This process utilizes the publisher/subscriber pattern using the [EventBus](https://greenrobot.org/eventbus/) library. 
+Items are also saved to an ObjectBox database and are persistent across log-ins - that is, a user can exit and return, and there medications will be saved under their account. 
 
-+ Storing of added medications in local database.   
-+ A relation exists between the medication data and the user data. Only medications belonging to the logged in user are fetched at activity creation.
+GIF HERE
 
-Medications are added by tapping the bottle-plus icon. Now more data, such as medication frequency (what days the medication is to be taken on) and a reminder time can be saved with the medication information, as can be seen in the second screenshot.   
-However, while that data is being stored in the database, it is not reflected in the created medication fragment back on the Profile activity -- I wanted to customize this implementation a bit more, and thus will implement later (plus, it's been updated fairly recently).  
+The default profile picture (light purple smiley face) can also be replaced by a user-chosen photo, either through taking a new picture or choosing from the gallery. New photos taken will be saved to the device, and the chosen picture's path will be saved and appear the next time a user logs in.
 
-The profile photo can still be changed with a tap and hold. 
+GIF HERE
 
 ## Community
 Here, I have implemented a RecyclerView to later display the available topics in the Community section. Right now, they are just being labelled as per the example dummy repository. However, tapping the plus button on each topic will open up a (right now, filler) data graph. This graph is generated using [AAChartCore](https://github.com/AAChartModel/AAChartCore), a pretty powerful yet simple library that takes away a lot of the pain that other graph libraries I was trying to use caused. 
