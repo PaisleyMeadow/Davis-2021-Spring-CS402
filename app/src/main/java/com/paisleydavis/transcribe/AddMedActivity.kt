@@ -156,6 +156,8 @@ class AddMedActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
             if(med != null) {
                 medBox.remove(med)
             }
+            // reset app's user data
+            TranscribeApplication.setUser(TranscribeApplication.getUser())
 
             // then return to profile
             val newIntent = Intent(this, Profile::class.java)

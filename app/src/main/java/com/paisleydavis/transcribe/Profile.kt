@@ -28,6 +28,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.jvm.Throws
 
 //TODO: Optimize activity order -- make Profile top stack when called; bug when going back to login page and then back to profile
 class Profile : AppCompatActivity() {

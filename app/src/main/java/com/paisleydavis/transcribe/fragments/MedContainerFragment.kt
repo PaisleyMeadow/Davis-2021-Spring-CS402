@@ -58,17 +58,7 @@ class MedContainerFragment : Fragment() {
         medContainer.visibility = View.GONE
 
         //load meds from object box that belong to current user
-        val res = TranscribeApplication.getUser().meds
-
-        if(res.isNotEmpty()){
-            val emptyText = viewOfLayout.findViewById<TextView>(R.id.emptyMedText)
-            emptyText.visibility = View.GONE
-
-            for(med in res){
-                createNewMedFragment(med.name, med.dosageAmount, med.dosageUnit, med.frequencyDays, med.reminderOn, med.reminderHour, med.reminderMinute)
-            }
-        }
-
+        loadMeds()
 
         val addButton = viewOfLayout.findViewById<ImageView>(R.id.addMedButton)
         addButton.setOnClickListener{goToAddMed()}
@@ -89,15 +79,32 @@ class MedContainerFragment : Fragment() {
         return viewOfLayout
     }
 
-    // on resuming activity, if a med has been edited, need to delete old fragment for med
+    private fun loadMeds() {
+        val res = TranscribeApplication.getUser().meds
+
+        if(res.isNotEmpty()){
+            val emptyText = viewOfLayout.findViewById<TextView>(R.id.emptyMedText)
+            emptyText.visibility = View.GONE
+
+            for(med in res){
+                createNewMedFragment(med.name, med.dosageAmount, med.dosageUnit, med.frequencyDays, med.reminderOn, med.reminderHour, med.reminderMinute)
+            }
+        }
+    }
+
+    // on resuming activity, if a med has been edited, need to remove old fragments and reload
     override fun onResume(){
         super.onResume()
         val tag = activity?.intent?.getStringExtra("tag")
         if(tag != null) {
-            val frag = childFragmentManager.findFragmentByTag(activity?.intent?.extras?.get("tag") as String?)
-            if (frag != null) {
+            for(frag in childFragmentManager.fragments){
                 childFragmentManager.beginTransaction().remove(frag).commit()
             }
+            loadMeds()
+//            val frag = childFragmentManager.findFragmentByTag(activity?.intent?.extras?.get("tag") as String?)
+//            if (frag != null) {
+//                childFragmentManager.beginTransaction().remove(frag).commit()
+//            }
         }
     }
 
@@ -134,17 +141,15 @@ class MedContainerFragment : Fragment() {
             val medBox: Box<MedData> = boxStore.boxFor()
             medBox.put(newMedData)
         }
-
-        // below ia just for testing
-//        val results = boxStore.boxFor(MedData::class.java).all
-//        Log.d("MEDS", results.toString())
-//        Log.d("CURRENT", TranscribeApplication.getUser().toString())
     }
 
     /**
      * Go to add med activity, from profile by tapping medications + button
      */
     private fun goToAddMed(){
+        val dropdown = viewOfLayout.findViewById<ImageButton>(R.id.expand_med)
+        dropdown.performClick() // always close drop down
+
         val intent = Intent(activity, AddMedActivity::class.java)
         startActivity(intent)
     }

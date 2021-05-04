@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Switch
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.paisleydavis.transcribe.AddMedActivity
@@ -38,7 +35,6 @@ private const val ARG_REMINDER_MINUTE = "reminderMinute"
  * create an instance of this fragment.
  */
 class MedFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var medName: String? = null
     private var medDosage: Long = 0
     private var medUnit: String? = null
@@ -107,7 +103,7 @@ class MedFragment : Fragment() {
 
         }
 
-        if (dayList != null && dayList.size != 1) {
+        if (dayList != null && dayList.isNotEmpty()) {
             for(chosenDay in dayList){
                 when(chosenDay.substring(0, 2)){
                     "Su" -> {
@@ -216,7 +212,6 @@ class MedFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment MedFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(medName: String, medDosage: Long, medUnit: String, frequency: String, reminderOn: Boolean, reminderHour: Int, reminderMinute: Int) =
                 MedFragment().apply {
